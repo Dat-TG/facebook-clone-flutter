@@ -1,0 +1,86 @@
+import 'package:facebook/constants/global_variables.dart';
+import 'package:flutter/material.dart';
+
+class HomeAppBar extends StatefulWidget {
+  const HomeAppBar({super.key});
+
+  @override
+  State<HomeAppBar> createState() => _HomeAppBarState();
+}
+
+class _HomeAppBarState extends State<HomeAppBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            IconButton(
+                splashRadius: 20,
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                  size: 28,
+                )),
+            const Text(
+              'facebook',
+              style: TextStyle(
+                color: GlobalVariables.secondaryColor,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              width: 35,
+              height: 35,
+              padding: const EdgeInsets.all(0),
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black12,
+              ),
+              child: IconButton(
+                splashRadius: 18,
+                padding: const EdgeInsets.all(0),
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.black,
+                  size: 24,
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              width: 35,
+              height: 35,
+              padding: const EdgeInsets.all(0),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black12,
+              ),
+              child: IconButton(
+                splashRadius: 18,
+                padding: const EdgeInsets.all(0),
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.message,
+                  color: Colors.black,
+                  size: 20,
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
