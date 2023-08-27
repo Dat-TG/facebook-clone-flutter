@@ -1,7 +1,10 @@
+import 'package:facebook/features/news-feed/widgets/add_story_card.dart';
 import 'package:facebook/features/news-feed/widgets/story_card.dart';
 import 'package:facebook/models/story.dart';
 import 'package:facebook/models/user.dart';
+import 'package:facebook/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewsFeedScreen extends StatefulWidget {
   const NewsFeedScreen({super.key});
@@ -12,10 +15,6 @@ class NewsFeedScreen extends StatefulWidget {
 
 class _NewsFeedScreenState extends State<NewsFeedScreen> {
   Color colorNewPost = Colors.transparent;
-  final User user = User(
-      name: 'Lê Công Đắt',
-      avatar:
-          'https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/318493519_1198259884399429_381099977086172582_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=n5Big1aY7EwAX8Op479&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfCFHCJsdxPVikMDMhEYM8yoUq2cgH5rUwzfSCZG-ao2Bw&oe=64EE43CB');
   final stories = [
     Story(
         user: User(
@@ -45,6 +44,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<UserProvider>(context).user;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -64,6 +64,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                 ),
                 Expanded(
                   child: InkWell(
+                    borderRadius: BorderRadius.circular(20),
                     onTap: () {
                       setState(() {
                         colorNewPost = Colors.transparent;
@@ -76,13 +77,13 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                     },
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: colorNewPost,
                         shape: BoxShape.rectangle,
                         border: Border.all(
                           color: Colors.black12,
                           style: BorderStyle.solid,
                         ),
                         borderRadius: BorderRadius.circular(20),
+                        color: colorNewPost,
                       ),
                       child: const Padding(
                         padding: EdgeInsets.symmetric(
@@ -121,17 +122,22 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
             ),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: stories
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 5,
+                  ),
+                  child: AddStoryCard(),
+                ),
+                ...stories
                     .map((e) => Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,
                           ),
                           child: StoryCard(story: e),
                         ))
-                    .toList(),
-              ),
+                    .toList()
+              ]),
             ),
           )
         ],
