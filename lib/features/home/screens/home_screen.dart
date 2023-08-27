@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen>
   late final TabController tabController;
   int index = 0;
   double toolBarHeight = 60;
+  GlobalKey newsFeedKey = GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
               floating: true,
               forceElevated: innerBoxIsScrolled,
               bottom: PreferredSize(
-                preferredSize: Size.fromHeight(index == 0 ? 40 : 65),
+                preferredSize: const Size.fromHeight(48),
                 child: Column(
                   children: [
                     TabBar(
@@ -145,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen>
         body: TabBarView(
           controller: tabController,
           children: <Widget>[
-            const NewsFeedScreen(),
+            NewsFeedScreen(scrollKey: newsFeedKey),
             const Text('2'),
             const Text('3'),
             const Text('4'),

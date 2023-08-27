@@ -1,5 +1,7 @@
 import 'package:facebook/features/news-feed/widgets/add_story_card.dart';
+import 'package:facebook/features/news-feed/widgets/post_card.dart';
 import 'package:facebook/features/news-feed/widgets/story_card.dart';
+import 'package:facebook/models/post.dart';
 import 'package:facebook/models/story.dart';
 import 'package:facebook/models/user.dart';
 import 'package:facebook/providers/user_provider.dart';
@@ -7,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NewsFeedScreen extends StatefulWidget {
-  const NewsFeedScreen({super.key});
+  final GlobalKey scrollKey;
+  const NewsFeedScreen({super.key, required this.scrollKey});
 
   @override
   State<NewsFeedScreen> createState() => _NewsFeedScreenState();
@@ -42,10 +45,35 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
         time: DateTime(2023, 8, 24, 16, 5)),
   ];
 
+  final posts = [
+    Post(
+      user: User(
+          name: 'Đài Phát Thanh.',
+          avatar:
+              'https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/339122927_1347965006053141_1323654940389313527_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=oqRr-PRhelAAX-zrYBv&_nc_ht=scontent.fsgn5-15.fna&oh=00_AfA06jJSw3vkIVNHCAcF4D2Eu_KCCVRph8XWhRHaAr4DTQ&oe=64EF8893'),
+      time: '16 giờ',
+      shareWith: 'public',
+      content:
+          'Rap Việt Mùa 3 (2023) đã tìm ra Top 9 bước vào Chung Kết, hứa hẹn một trận đại chiến cực căng.\n\nTập cuối vòng Bứt Phá Rap Việt Mùa 3 (2023) đã chính thức khép lại và chương trình đã tìm ra 9 gương mặt đầy triển vọng để bước vào vòng Chung Kết tranh ngôi vị quán quân.\n\nKịch tính, cam go và đầy bất ngờ đến tận những giây phút cuối, Huỳnh Công Hiếu của team B Ray đã vượt lên trên 3 đối thủ Yuno BigBoi, Richie D. ICY, gung0cay để giành được tấm vé đầu tiên bước vào Chung Kết cho đội của mình.\n\nỞ bảng F, không hề thua kém người đồng đội cùng team, 24k.Right cũng có được vé vào Chung Kết sau khi hạ gục SMO team Andree Right Hand, Pháp Kiều – team BigDaddy và Tọi đến từ team Thái VG tại bảng F.\n\nKết thúc toàn bộ phần trình diễn của các thí sinh ở vòng Bứt Phá cũng là lúc 3 Giám khảo hội ý để đưa ra quyết định chọn người nhận Nón Vàng của mình để bước tiếp vào đêm Chung Kết Rap Việt Mùa 3 (2023).\n\nNữ giám khảo Suboi quyết định trao nón vàng cho thành viên đội HLV BigDaddy - Pháp Kiều. Tiếp theo, SMO là người được Giám khảo Karik tin tưởng trao nón. Cuối cùng, Giám khảo JustaTee quyết định trao gửi Nón Vàng của mình cho Double2T.\n\nNhư vậy, đội hình Top 9 bước vào Chung kết đã hoàn thiện gồm: Huỳnh Công Hiếu, 24k.Right – Team B Ray; Liu Grace, Mikelodic – Team Thái VG; SMO, Rhyder – Team Andree Right Hand và Pháp Kiều, Double2T, Tez – Team BigDaddy.',
+      image: [
+        'https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/370864319_864199815072408_2393037458283783211_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=730e14&_nc_ohc=jvUU9TPbWsYAX_EX9qw&_nc_ht=scontent.fsgn5-15.fna&oh=00_AfCRdrXoYoN9jsFFyESGyAXCAb-xsdmOw-PzLFlABhJWJQ&oe=64EF09F4'
+      ],
+      like: 8500,
+      angry: 0,
+      comment: 902,
+      haha: 43,
+      love: 2200,
+      lovelove: 59,
+      sad: 36,
+      share: 98,
+      wow: 7,
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).user;
     return SingleChildScrollView(
+      key: widget.scrollKey,
       child: Column(
         children: [
           Padding(
@@ -139,6 +167,31 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                     .toList()
               ]),
             ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: double.infinity,
+            height: 5,
+            color: Colors.black26,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Column(
+            children: posts
+                .map((e) => Column(
+                      children: [
+                        PostCard(post: e),
+                        Container(
+                          width: double.infinity,
+                          height: 5,
+                          color: Colors.black26,
+                        ),
+                      ],
+                    ))
+                .toList(),
           )
         ],
       ),
