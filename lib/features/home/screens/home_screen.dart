@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:facebook/constants/global_variables.dart';
 import 'package:facebook/features/home/widgets/home_app_bar.dart';
 import 'package:facebook/features/news-feed/screen/news_feed_screen.dart';
@@ -145,13 +143,13 @@ class _HomeScreenState extends State<HomeScreen>
         },
         body: TabBarView(
           controller: tabController,
-          children: <Widget>[
-            NewsFeedScreen(scrollKey: newsFeedKey),
-            const Text('2'),
-            const Text('3'),
-            const Text('4'),
-            const Text('5'),
-            const Text('6')
+          children: const <Widget>[
+            NewsFeedScreen(),
+            Text('2'),
+            Text('3'),
+            Text('4'),
+            Text('5'),
+            Text('6')
           ],
         ),
       ),

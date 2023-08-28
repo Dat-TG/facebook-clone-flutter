@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NewsFeedScreen extends StatefulWidget {
-  final GlobalKey scrollKey;
-  const NewsFeedScreen({super.key, required this.scrollKey});
+  static double offset = 0;
+  const NewsFeedScreen({super.key});
 
   @override
   State<NewsFeedScreen> createState() => _NewsFeedScreenState();
@@ -86,11 +86,23 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
       comment: 5,
     ),
   ];
+
+  ScrollController scrollController =
+      ScrollController(initialScrollOffset: NewsFeedScreen.offset);
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      NewsFeedScreen.offset = scrollController.offset;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).user;
     return SingleChildScrollView(
-      key: widget.scrollKey,
+      controller: scrollController,
       child: Column(
         children: [
           Padding(
