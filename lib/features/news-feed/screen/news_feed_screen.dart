@@ -68,6 +68,23 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
       share: 98,
       wow: 7,
     ),
+    Post(
+      user: User(
+          name: 'GOAL Vietnam',
+          verified: true,
+          avatar:
+              'https://scontent.fsgn5-15.fna.fbcdn.net/v/t39.30808-6/253661980_4334874469968763_6861397363581584707_n.png?_nc_cat=1&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=TzPm9OfFjtQAX8APnh3&_nc_ht=scontent.fsgn5-15.fna&oh=00_AfBz_23yyMXZH9HedBgjGeWeP047SIs91TnuYWVchR5ORA&oe=64F17AED'),
+      time: '3 phút',
+      shareWith: 'public',
+      content:
+          '✅ 10 năm cống hiến cho bóng đá trẻ Việt Nam\n✅ Người đầu tiên đưa Việt Nam tham dự World Cup ở cấp độ U20 🌏🇻🇳\n✅ Giành danh hiệu đầu tiên cùng U23 Việt Nam tại giải U23 Đông Nam Á 2023 🏆\n\nMột người thầy đúng nghĩa với sự tận tụy cống hiến cho sự nghiệp ươm mầm những tương lai của bóng đá nước nhà. Cảm ơn ông, HLV Hoàng Anh Tuấn ❤️\n\n📸 VFF\n\n#goalvietnam #hot #HoangAnhTuan #U23Vietnam',
+      image: [
+        'https://scontent.fsgn5-13.fna.fbcdn.net/v/t39.30808-6/371312787_606453368359308_4124093680916535505_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=KRrjglV0siIAX-6jFPK&_nc_ht=scontent.fsgn5-13.fna&oh=00_AfAilzZgZ-3x5MXDI48fhWe7Vzt47v-TumUojzHudyRFMg&oe=64F1B417'
+      ],
+      like: 163,
+      love: 24,
+      comment: 5,
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -176,13 +193,13 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
             height: 5,
             color: Colors.black26,
           ),
-          const SizedBox(
-            height: 10,
-          ),
           Column(
             children: posts
                 .map((e) => Column(
                       children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
                         PostCard(post: e),
                         Container(
                           width: double.infinity,
