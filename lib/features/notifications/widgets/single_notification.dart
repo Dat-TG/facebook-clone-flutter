@@ -46,9 +46,18 @@ class _SingleNotificationState extends State<SingleNotification> {
               width: 60,
               child: Stack(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage(widget.notification.image),
-                    radius: 40,
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.black54,
+                        width: 3,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(widget.notification.image),
+                      radius: 40,
+                    ),
                   ),
                   Positioned(
                     right: 0,
@@ -76,7 +85,7 @@ class _SingleNotificationState extends State<SingleNotification> {
                                                   ? Colors.purple
                                                   : widget.notification.type ==
                                                           'badge'
-                                                      ? Colors.yellow
+                                                      ? Colors.yellow.shade700
                                                       : Colors.white),
                       child: (widget.notification.type == 'memory')
                           ? const Icon(
@@ -100,11 +109,68 @@ class _SingleNotificationState extends State<SingleNotification> {
                                       ? const CircleAvatar(
                                           backgroundImage: AssetImage(
                                               'assets/images/flag.png'))
-                                      : const Icon(
-                                          Icons.facebook,
-                                          color: Colors.blue,
-                                          size: 30,
-                                        ),
+                                      : (widget.notification.type == 'group')
+                                          ? const Icon(
+                                              Icons.groups_rounded,
+                                              color: Colors.white,
+                                              size: 24,
+                                            )
+                                          : (widget.notification.type ==
+                                                  'security')
+                                              ? const Icon(
+                                                  Icons.security_rounded,
+                                                  color: Colors.white,
+                                                  size: 20,
+                                                )
+                                              : (widget.notification.type ==
+                                                      'date')
+                                                  ? const Icon(
+                                                      Icons.favorite_rounded,
+                                                      color: Colors.white,
+                                                      size: 20,
+                                                    )
+                                                  : (widget.notification.type ==
+                                                          'badge')
+                                                      ? const ImageIcon(
+                                                          AssetImage(
+                                                            'assets/images/trophy.png',
+                                                          ),
+                                                          size: 18,
+                                                          color: Colors.white,
+                                                        )
+                                                      : (widget.notification
+                                                                  .type ==
+                                                              'like')
+                                                          ? Image.asset(
+                                                              'assets/images/reactions/like.png')
+                                                          : (widget.notification
+                                                                      .type ==
+                                                                  'love')
+                                                              ? Image.asset(
+                                                                  'assets/images/reactions/love.png')
+                                                              : (widget.notification
+                                                                          .type ==
+                                                                      'haha')
+                                                                  ? Image.asset(
+                                                                      'assets/images/reactions/haha.png')
+                                                                  : (widget.notification
+                                                                              .type ==
+                                                                          'wow')
+                                                                      ? Image.asset(
+                                                                          'assets/images/reactions/wow.png')
+                                                                      : (widget.notification.type ==
+                                                                              'lovelove')
+                                                                          ? Image.asset(
+                                                                              'assets/images/reactions/care.png')
+                                                                          : (widget.notification.type == 'sad')
+                                                                              ? Image.asset('assets/images/reactions/sad.png')
+                                                                              : (widget.notification.type == 'angry')
+                                                                                  ? Image.asset('assets/images/reactions/angry.png')
+                                                                                  : const Icon(
+                                                                                      Icons.facebook,
+                                                                                      color: Colors.blue,
+                                                                                      size: 30,
+                                                                                    ),
                     ),
                   )
                 ],
