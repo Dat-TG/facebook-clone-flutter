@@ -54,10 +54,10 @@ class _HomeAppBarState extends State<HomeAppBar> {
                 splashRadius: 18,
                 padding: const EdgeInsets.all(0),
                 onPressed: () {},
-                icon: const Icon(
-                  Icons.search,
+                icon: const ImageIcon(
+                  AssetImage('assets/images/search.png'),
+                  size: 22,
                   color: Colors.black,
-                  size: 24,
                 ),
               ),
             ),
@@ -75,10 +75,10 @@ class _HomeAppBarState extends State<HomeAppBar> {
                 splashRadius: 18,
                 padding: const EdgeInsets.all(0),
                 onPressed: () {},
-                icon: const Icon(
-                  Icons.message,
+                icon: const ImageIcon(
+                  AssetImage('assets/images/message.png'),
+                  size: 23,
                   color: Colors.black,
-                  size: 20,
                 ),
               ),
             ),

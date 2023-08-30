@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 
 class NewsFeedScreen extends StatefulWidget {
   static double offset = 0;
-  const NewsFeedScreen({super.key});
+  final ScrollController parentScrollController;
+  const NewsFeedScreen({super.key, required this.parentScrollController});
 
   @override
   State<NewsFeedScreen> createState() => _NewsFeedScreenState();
@@ -79,6 +80,10 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   void initState() {
     super.initState();
     scrollController.addListener(() {
+      widget.parentScrollController.jumpTo(
+          widget.parentScrollController.offset +
+              scrollController.offset -
+              NewsFeedScreen.offset);
       NewsFeedScreen.offset = scrollController.offset;
     });
   }
@@ -88,6 +93,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
     final User user = Provider.of<UserProvider>(context).user;
     return SingleChildScrollView(
       controller: scrollController,
+      physics: const ClampingScrollPhysics(),
       child: Column(
         children: [
           Padding(

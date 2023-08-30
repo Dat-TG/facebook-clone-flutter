@@ -15,9 +15,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int index = 0;
   double toolBarHeight = 60;
-  GlobalKey newsFeedKey = GlobalKey();
-  final list = <Widget>[
-    const NewsFeedScreen(),
+  ScrollController scrollController = ScrollController();
+  late final list = <Widget>[
+    NewsFeedScreen(parentScrollController: scrollController),
     const Text('2'),
     const Text('3'),
     const Text('4'),
@@ -33,12 +33,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
+          controller: scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverAppBar(
                 toolbarHeight: toolBarHeight,
                 titleSpacing: 0,
-                elevation: 10,
                 title: AnimatedContainer(
                   onEnd: () {
                     setState(() {
@@ -53,120 +53,140 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const HomeAppBar(),
                 ),
                 floating: true,
-                snap: true,
+                snap: index == 0,
+                pinned: true,
                 bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(48),
+                  preferredSize: const Size.fromHeight(46),
                   child: Column(
                     children: [
                       SizedBox(
                         width: double.infinity,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  index = 0;
-                                  toolBarHeight = 60;
-                                });
-                              },
-                              child: Tab(
-                                icon: Icon(
-                                  index != 0
-                                      ? Icons.home_outlined
-                                      : Icons.home_rounded,
-                                  color: index == 0
-                                      ? GlobalVariables.secondaryColor
-                                      : GlobalVariables.iconColor,
-                                  size: 30,
-                                  grade: 10,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    index = 0;
+                                    toolBarHeight = 60;
+                                    scrollController.jumpTo(
+                                      0,
+                                    );
+                                  });
+                                },
+                                child: Tab(
+                                  icon: Icon(
+                                    index != 0
+                                        ? Icons.home_outlined
+                                        : Icons.home_rounded,
+                                    color: index == 0
+                                        ? GlobalVariables.secondaryColor
+                                        : GlobalVariables.iconColor,
+                                    size: 30,
+                                    grade: 10,
+                                  ),
                                 ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  index = 1;
-                                });
-                              },
-                              child: Tab(
-                                icon: Icon(
-                                  Icons.ondemand_video_rounded,
-                                  color: index == 1
-                                      ? GlobalVariables.secondaryColor
-                                      : GlobalVariables.iconColor,
-                                  fill: 1,
-                                  size: 30,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    index = 1;
+                                    scrollController.jumpTo(0);
+                                  });
+                                },
+                                child: Tab(
+                                  icon: Icon(
+                                    Icons.ondemand_video_rounded,
+                                    color: index == 1
+                                        ? GlobalVariables.secondaryColor
+                                        : GlobalVariables.iconColor,
+                                    fill: 1,
+                                    size: 30,
+                                  ),
                                 ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  index = 2;
-                                });
-                              },
-                              child: Tab(
-                                icon: Icon(
-                                  index != 2
-                                      ? Icons.store_mall_directory_outlined
-                                      : Icons.store_mall_directory_rounded,
-                                  color: index == 2
-                                      ? GlobalVariables.secondaryColor
-                                      : GlobalVariables.iconColor,
-                                  size: 30,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    index = 2;
+                                    scrollController.jumpTo(0);
+                                  });
+                                },
+                                child: Tab(
+                                  icon: Icon(
+                                    index != 2
+                                        ? Icons.store_mall_directory_outlined
+                                        : Icons.store_mall_directory_rounded,
+                                    color: index == 2
+                                        ? GlobalVariables.secondaryColor
+                                        : GlobalVariables.iconColor,
+                                    size: 30,
+                                  ),
                                 ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  index = 3;
-                                });
-                              },
-                              child: Tab(
-                                icon: Icon(
-                                  index != 3
-                                      ? Icons.favorite_outline
-                                      : Icons.favorite,
-                                  color: index == 3
-                                      ? GlobalVariables.secondaryColor
-                                      : GlobalVariables.iconColor,
-                                  size: 30,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    index = 3;
+                                    scrollController.jumpTo(0);
+                                  });
+                                },
+                                child: Tab(
+                                  icon: Icon(
+                                    index != 3
+                                        ? Icons.favorite_outline
+                                        : Icons.favorite,
+                                    color: index == 3
+                                        ? GlobalVariables.secondaryColor
+                                        : GlobalVariables.iconColor,
+                                    size: 30,
+                                  ),
                                 ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  index = 4;
-                                });
-                              },
-                              child: Tab(
-                                icon: Icon(
-                                  index != 4
-                                      ? Icons.notifications_none_outlined
-                                      : Icons.notifications,
-                                  color: index == 4
-                                      ? GlobalVariables.secondaryColor
-                                      : GlobalVariables.iconColor,
-                                  size: 30,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    index = 4;
+                                    scrollController.jumpTo(0);
+                                  });
+                                },
+                                child: Tab(
+                                  icon: Icon(
+                                    index != 4
+                                        ? Icons.notifications_none_outlined
+                                        : Icons.notifications,
+                                    color: index == 4
+                                        ? GlobalVariables.secondaryColor
+                                        : GlobalVariables.iconColor,
+                                    size: 30,
+                                  ),
                                 ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  index = 5;
-                                });
-                              },
-                              child: Tab(
-                                icon: Icon(
-                                  Icons.menu,
-                                  color: index == 5
-                                      ? GlobalVariables.secondaryColor
-                                      : GlobalVariables.iconColor,
-                                  size: 30,
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    index = 5;
+                                    scrollController.jumpTo(0);
+                                  });
+                                },
+                                child: Tab(
+                                  icon: Icon(
+                                    Icons.menu,
+                                    color: index == 5
+                                        ? GlobalVariables.secondaryColor
+                                        : GlobalVariables.iconColor,
+                                    size: 30,
+                                  ),
                                 ),
                               ),
                             ),
