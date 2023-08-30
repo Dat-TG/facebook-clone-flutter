@@ -25,7 +25,7 @@ class _StoryCardState extends State<StoryCard> {
           width: 1,
         ),
         image: DecorationImage(
-          image: NetworkImage(
+          image: AssetImage(
             widget.story.image,
           ),
           fit: BoxFit.cover,
@@ -62,7 +62,7 @@ class _StoryCardState extends State<StoryCard> {
                   ),
                   child: CircleAvatar(
                     radius: 15,
-                    backgroundImage: NetworkImage(
+                    backgroundImage: AssetImage(
                       widget.story.user.avatar,
                     ),
                   ),

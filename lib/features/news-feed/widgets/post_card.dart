@@ -88,7 +88,7 @@ class _PostCardState extends State<PostCard> {
                 children: [
                   CircleAvatar(
                     radius: 20,
-                    backgroundImage: NetworkImage(widget.post.user.avatar),
+                    backgroundImage: AssetImage(widget.post.user.avatar),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
@@ -179,7 +179,7 @@ class _PostCardState extends State<PostCard> {
           padding: const EdgeInsets.all(10),
           child: PostContent(text: widget.post.content!),
         ),
-        Image.network(
+        Image.asset(
           widget.post.image![0],
           fit: BoxFit.fitWidth,
         ),

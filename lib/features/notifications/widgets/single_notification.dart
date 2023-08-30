@@ -47,7 +47,7 @@ class _SingleNotificationState extends State<SingleNotification> {
               child: Stack(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(widget.notification.image),
+                    backgroundImage: AssetImage(widget.notification.image),
                     radius: 40,
                   ),
                   Positioned(

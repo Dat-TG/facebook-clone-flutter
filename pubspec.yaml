@@ -63,6 +63,9 @@ flutter:
   assets:
     - assets/images/
     - assets/images/reactions/
+    - assets/images/user/
+    - assets/images/post/
+    - assets/images/story/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
