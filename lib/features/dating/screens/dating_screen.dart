@@ -2,6 +2,7 @@ import 'package:facebook/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class DatingScreen extends StatefulWidget {
+  static double offset = 0;
   const DatingScreen({super.key});
 
   @override
@@ -9,11 +10,23 @@ class DatingScreen extends StatefulWidget {
 }
 
 class _DatingScreenState extends State<DatingScreen> {
-  ScrollController scrollController = ScrollController();
+  ScrollController scrollController =
+      ScrollController(initialScrollOffset: DatingScreen.offset);
+  ScrollController headerScrollController = ScrollController();
+  @override
+  void dispose() {
+    scrollController.dispose();
+    headerScrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    scrollController.addListener(() {
+      DatingScreen.offset = scrollController.offset;
+    });
     return NestedScrollView(
-      controller: scrollController,
+      controller: headerScrollController,
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverAppBar(
           leadingWidth: 0,
@@ -58,9 +71,9 @@ class _DatingScreenState extends State<DatingScreen> {
                   height: 35,
                   padding: const EdgeInsets.all(0),
                   margin: const EdgeInsets.symmetric(horizontal: 5),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.black12,
+                    color: Colors.grey.withOpacity(0.1),
                   ),
                   child: IconButton(
                     splashRadius: 18,
@@ -79,6 +92,7 @@ class _DatingScreenState extends State<DatingScreen> {
         ),
       ],
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -100,7 +114,7 @@ class _DatingScreenState extends State<DatingScreen> {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black12,
+                            color: Colors.grey.withOpacity(0.1),
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -125,7 +139,7 @@ class _DatingScreenState extends State<DatingScreen> {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black12,
+                            color: Colors.grey.withOpacity(0.1),
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -150,7 +164,7 @@ class _DatingScreenState extends State<DatingScreen> {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.black12,
+                            color: Colors.grey.withOpacity(0.1),
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -173,7 +187,7 @@ class _DatingScreenState extends State<DatingScreen> {
                           vertical: 8,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.black12,
+                          color: Colors.grey.withOpacity(0.1),
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -354,7 +368,7 @@ class _DatingScreenState extends State<DatingScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.black12,
+                    color: Colors.grey.withOpacity(0.1),
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
@@ -432,7 +446,7 @@ class _DatingScreenState extends State<DatingScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.black12,
+                    color: Colors.grey.withOpacity(0.1),
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
@@ -510,7 +524,7 @@ class _DatingScreenState extends State<DatingScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.black12,
+                    color: Colors.grey.withOpacity(0.1),
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,
@@ -588,7 +602,7 @@ class _DatingScreenState extends State<DatingScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.black12,
+                    color: Colors.grey.withOpacity(0.1),
                   ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,

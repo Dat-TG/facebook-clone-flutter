@@ -101,8 +101,6 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
     });
     return SingleChildScrollView(
       controller: scrollController,
-      physics: const ClampingScrollPhysics(),
-      scrollDirection: Axis.vertical,
       child: Column(
         children: [
           Padding(
