@@ -303,7 +303,7 @@ class _DatingScreenState extends State<DatingScreen> {
                               ],
                             ),
                             child: const Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: EdgeInsets.all(12.5),
                               child: Icon(
                                 Icons.favorite_rounded,
                                 size: 35,

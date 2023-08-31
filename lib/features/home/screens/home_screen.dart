@@ -81,17 +81,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                     );
                                   });
                                 },
-                                child: Tab(
-                                  icon: Icon(
-                                    index != 0
-                                        ? Icons.home_outlined
-                                        : Icons.home_rounded,
-                                    color: index == 0
-                                        ? GlobalVariables.secondaryColor
-                                        : GlobalVariables.iconColor,
-                                    size: 30,
-                                    grade: 10,
-                                  ),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: Tab(
+                                        icon: Icon(
+                                          index != 0
+                                              ? Icons.home_outlined
+                                              : Icons.home_rounded,
+                                          color: index == 0
+                                              ? GlobalVariables.secondaryColor
+                                              : GlobalVariables.iconColor,
+                                          size: 30,
+                                          grade: 10,
+                                        ),
+                                      ),
+                                    ),
+                                    if (index == 0)
+                                      Positioned(
+                                        bottom: 0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    6 -
+                                                10,
+                                            height: 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -103,15 +130,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                     scrollController.jumpTo(0);
                                   });
                                 },
-                                child: Tab(
-                                  icon: Icon(
-                                    Icons.ondemand_video_rounded,
-                                    color: index == 1
-                                        ? GlobalVariables.secondaryColor
-                                        : GlobalVariables.iconColor,
-                                    fill: 1,
-                                    size: 30,
-                                  ),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: Tab(
+                                        icon: Icon(
+                                          Icons.ondemand_video_rounded,
+                                          color: index == 1
+                                              ? GlobalVariables.secondaryColor
+                                              : GlobalVariables.iconColor,
+                                          fill: 1,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                    if (index == 1)
+                                      Positioned(
+                                        bottom: 0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    6 -
+                                                10,
+                                            height: 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -123,16 +177,45 @@ class _HomeScreenState extends State<HomeScreen> {
                                     scrollController.jumpTo(0);
                                   });
                                 },
-                                child: Tab(
-                                  icon: Icon(
-                                    index != 2
-                                        ? Icons.store_mall_directory_outlined
-                                        : Icons.store_mall_directory_rounded,
-                                    color: index == 2
-                                        ? GlobalVariables.secondaryColor
-                                        : GlobalVariables.iconColor,
-                                    size: 30,
-                                  ),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: Tab(
+                                        icon: Icon(
+                                          index != 2
+                                              ? Icons
+                                                  .store_mall_directory_outlined
+                                              : Icons
+                                                  .store_mall_directory_rounded,
+                                          color: index == 2
+                                              ? GlobalVariables.secondaryColor
+                                              : GlobalVariables.iconColor,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                    if (index == 2)
+                                      Positioned(
+                                        bottom: 0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    6 -
+                                                10,
+                                            height: 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -144,16 +227,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                     scrollController.jumpTo(0);
                                   });
                                 },
-                                child: Tab(
-                                  icon: Icon(
-                                    index != 3
-                                        ? Icons.favorite_outline
-                                        : Icons.favorite,
-                                    color: index == 3
-                                        ? GlobalVariables.secondaryColor
-                                        : GlobalVariables.iconColor,
-                                    size: 30,
-                                  ),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: Tab(
+                                        icon: Icon(
+                                          index != 3
+                                              ? Icons.favorite_outline
+                                              : Icons.favorite,
+                                          color: index == 3
+                                              ? GlobalVariables.secondaryColor
+                                              : GlobalVariables.iconColor,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                    if (index == 3)
+                                      Positioned(
+                                        bottom: 0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    6 -
+                                                10,
+                                            height: 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -165,16 +275,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                     scrollController.jumpTo(0);
                                   });
                                 },
-                                child: Tab(
-                                  icon: Icon(
-                                    index != 4
-                                        ? Icons.notifications_none_outlined
-                                        : Icons.notifications,
-                                    color: index == 4
-                                        ? GlobalVariables.secondaryColor
-                                        : GlobalVariables.iconColor,
-                                    size: 30,
-                                  ),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: Tab(
+                                        icon: Icon(
+                                          index != 4
+                                              ? Icons
+                                                  .notifications_none_outlined
+                                              : Icons.notifications,
+                                          color: index == 4
+                                              ? GlobalVariables.secondaryColor
+                                              : GlobalVariables.iconColor,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                    if (index == 4)
+                                      Positioned(
+                                        bottom: 0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    6 -
+                                                10,
+                                            height: 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -186,14 +324,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                     scrollController.jumpTo(0);
                                   });
                                 },
-                                child: Tab(
-                                  icon: Icon(
-                                    Icons.menu,
-                                    color: index == 5
-                                        ? GlobalVariables.secondaryColor
-                                        : GlobalVariables.iconColor,
-                                    size: 30,
-                                  ),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: Tab(
+                                        icon: Icon(
+                                          Icons.menu,
+                                          color: index == 5
+                                              ? GlobalVariables.secondaryColor
+                                              : GlobalVariables.iconColor,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ),
+                                    if (index == 5)
+                                      Positioned(
+                                        bottom: 0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    6 -
+                                                10,
+                                            height: 3,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               ),
                             ),
