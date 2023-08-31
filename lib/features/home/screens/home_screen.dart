@@ -1,4 +1,5 @@
 import 'package:facebook/constants/global_variables.dart';
+import 'package:facebook/features/dating/screens/dating_screen.dart';
 import 'package:facebook/features/home/widgets/home_app_bar.dart';
 import 'package:facebook/features/news-feed/screen/news_feed_screen.dart';
 import 'package:facebook/features/notifications/screens/notifications_screen.dart';
@@ -20,13 +21,19 @@ class _HomeScreenState extends State<HomeScreen> {
     NewsFeedScreen(parentScrollController: scrollController),
     const Text('2'),
     const Text('3'),
-    const Text('4'),
+    const DatingScreen(),
     const NotificationsScreen(),
     const Text('6')
   ];
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override

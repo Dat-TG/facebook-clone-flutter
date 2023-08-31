@@ -79,21 +79,30 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(() {
-      widget.parentScrollController.jumpTo(
-          widget.parentScrollController.offset +
-              scrollController.offset -
-              NewsFeedScreen.offset);
-      NewsFeedScreen.offset = scrollController.offset;
-    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).user;
+    scrollController.addListener(() {
+      if (widget.parentScrollController.hasClients) {
+        widget.parentScrollController.jumpTo(
+            widget.parentScrollController.offset +
+                scrollController.offset -
+                NewsFeedScreen.offset);
+        NewsFeedScreen.offset = scrollController.offset;
+      }
+    });
     return SingleChildScrollView(
       controller: scrollController,
       physics: const ClampingScrollPhysics(),
+      scrollDirection: Axis.vertical,
       child: Column(
         children: [
           Padding(
