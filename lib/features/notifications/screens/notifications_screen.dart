@@ -27,27 +27,27 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       type: 'comment',
     ),
     Noti(
-      content: 'Hôm nay, bạn có thể ôn lại kỷ niệm.',
-      image: 'assets/images/memory.png',
-      time: '12 giờ trước',
-      type: 'memory',
-    ),
+        content: 'Hôm nay, bạn có thể ôn lại kỷ niệm.',
+        image: 'assets/images/memory.png',
+        time: '12 giờ trước',
+        type: 'memory',
+        seen: true),
     Noti(
-      content:
-          'Trang Đào Xuân Trường... mà bạn theo dõi đã đổi tên thành KHTN Confession',
-      image: 'assets/images/user/khtncfs.jpg',
-      time: '22 thg 7 lúc 1:39',
-      type: 'page',
-      bold: ['Đào Xuân Trường', 'KHTN Confession'],
-    ),
+        content:
+            'Trang Đào Xuân Trường... mà bạn theo dõi đã đổi tên thành KHTN Confession',
+        image: 'assets/images/user/khtncfs.jpg',
+        time: '22 thg 7 lúc 1:39',
+        type: 'page',
+        bold: ['Đào Xuân Trường', 'KHTN Confession'],
+        seen: true),
     Noti(
-      content:
-          'Một quản trị viên đã thay đổi tên của nhóm 2K5 Quyết Đỗ Đại Học thành 2K6 Quyết Đỗ Đại Học',
-      image: 'assets/images/user/ddh.png',
-      time: '21 thg 8 lúc 15:45',
-      type: 'group',
-      bold: ['2K5 Quyết Đỗ Đại Học', '2K6 Quyết Đỗ Đại Học'],
-    ),
+        content:
+            'Một quản trị viên đã thay đổi tên của nhóm 2K5 Quyết Đỗ Đại Học thành 2K6 Quyết Đỗ Đại Học',
+        image: 'assets/images/user/ddh.png',
+        time: '21 thg 8 lúc 15:45',
+        type: 'group',
+        bold: ['2K5 Quyết Đỗ Đại Học', '2K6 Quyết Đỗ Đại Học'],
+        seen: true),
     Noti(
       content:
           'Vào 11:45, 8 tháng 8, 2023, bạn đã đăng nhập vào TopCV. Nếu đó không phải bạn thì bạn có thể gỡ ứng dụng này.',
@@ -89,20 +89,20 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       bold: ['Minh Hương'],
     ),
     Noti(
-      content: 'Minh Trí và 1310 người khác đã bày tỏ cảm xúc về một ảnh.',
-      image: 'assets/images/user/minhtri.jpg',
-      time: '1 thg 7 lúc 10:20',
-      type: 'haha',
-      bold: ['Minh Trí'],
-    ),
+        content: 'Minh Trí và 1310 người khác đã bày tỏ cảm xúc về một ảnh.',
+        image: 'assets/images/user/minhtri.jpg',
+        time: '1 thg 7 lúc 10:20',
+        type: 'haha',
+        bold: ['Minh Trí'],
+        seen: true),
     Noti(
-      content:
-          'Vuong Hong Thuy và 100 người khác đã bày tỏ cảm xúc về một ảnh.',
-      image: 'assets/images/user/vuonghongthuy.jpg',
-      time: '30 thg 6 lúc 11:21',
-      type: 'sad',
-      bold: ['Vuong Hong Thuy'],
-    ),
+        content:
+            'Vuong Hong Thuy và 100 người khác đã bày tỏ cảm xúc về một ảnh.',
+        image: 'assets/images/user/vuonghongthuy.jpg',
+        time: '30 thg 6 lúc 11:21',
+        type: 'sad',
+        bold: ['Vuong Hong Thuy'],
+        seen: true),
     Noti(
       content:
           'Nguyễn Thị Minh Tuyền và 99 người khác đã bày tỏ cảm xúc về một ảnh.',
@@ -112,19 +112,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       bold: ['Nguyễn Thị Minh Tuyền'],
     ),
     Noti(
-      content: 'Hà Linhh và 199 người khác đã bày tỏ cảm xúc về một ảnh.',
-      image: 'assets/images/user/halinh.jpg',
-      time: '25 thg 6 lúc 07:44',
-      type: 'wow',
-      bold: ['Hà Linhh'],
-    ),
+        content: 'Hà Linhh và 199 người khác đã bày tỏ cảm xúc về một ảnh.',
+        image: 'assets/images/user/halinh.jpg',
+        time: '25 thg 6 lúc 07:44',
+        type: 'wow',
+        bold: ['Hà Linhh'],
+        seen: true),
     Noti(
-      content: 'Bảo Ngân và 299 người khác đã bày tỏ cảm xúc về một ảnh.',
-      image: 'assets/images/user/baongan.jpg',
-      time: '21 thg 6 lúc 08:22',
-      type: 'angry',
-      bold: ['Bảo Ngân'],
-    ),
+        content: 'Bảo Ngân và 299 người khác đã bày tỏ cảm xúc về một ảnh.',
+        image: 'assets/images/user/baongan.jpg',
+        time: '21 thg 6 lúc 08:22',
+        type: 'angry',
+        bold: ['Bảo Ngân'],
+        seen: true),
   ];
 
   ScrollController scrollController =
