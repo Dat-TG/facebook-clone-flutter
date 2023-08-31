@@ -1,4 +1,5 @@
 import 'package:facebook/constants/global_variables.dart';
+import 'package:facebook/features/news-feed/widgets/story_details.dart';
 import 'package:facebook/models/story.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,7 @@ class _StoryCardState extends State<StoryCard> {
         ),
         image: DecorationImage(
           image: AssetImage(
-            widget.story.image,
+            widget.story.image[0],
           ),
           fit: BoxFit.cover,
         ),
@@ -35,7 +36,10 @@ class _StoryCardState extends State<StoryCard> {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, StoryDetails.routeName,
+                arguments: widget.story);
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,

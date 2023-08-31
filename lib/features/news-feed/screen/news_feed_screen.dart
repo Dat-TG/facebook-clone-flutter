@@ -21,20 +21,26 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   Color colorNewPost = Colors.transparent;
   final stories = [
     Story(
-        user: User(name: 'Doraemon', avatar: 'assets/images/user/doraemon.jpg'),
-        image: 'assets/images/story/1.jpg',
-        time: DateTime(2023, 8, 24, 16, 5)),
+      user: User(name: 'Doraemon', avatar: 'assets/images/user/doraemon.jpg'),
+      image: ['assets/images/story/1.jpg'],
+      time: ['12 phút'],
+      shareWith: 'public',
+    ),
     Story(
-        user: User(
-            name: 'Sách Cũ Ngọc', avatar: 'assets/images/user/sachcungoc.jpg'),
-        image: 'assets/images/story/2.jpg',
-        time: DateTime(2023, 8, 24, 16, 5)),
+      user: User(
+          name: 'Sách Cũ Ngọc', avatar: 'assets/images/user/sachcungoc.jpg'),
+      image: ['assets/images/story/2.jpg'],
+      time: ['3 giờ'],
+      shareWith: 'friends',
+    ),
     Story(
-        user: User(
-            name: 'Vietnamese Argentina Football Fan Club (VAFFC)',
-            avatar: 'assets/images/user/vaffc.jpg'),
-        image: 'assets/images/story/3.jpg',
-        time: DateTime(2023, 8, 24, 16, 5)),
+      user: User(
+          name: 'Vietnamese Argentina Football Fan Club (VAFFC)',
+          avatar: 'assets/images/user/vaffc.jpg'),
+      image: ['assets/images/story/3.jpg'],
+      time: ['5 giờ'],
+      shareWith: 'friends-of-friends',
+    ),
   ];
 
   final posts = [
