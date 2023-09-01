@@ -149,7 +149,7 @@ class _PostCardState extends State<PostCard> {
                                             : Icons.lock,
                                 color: Colors.black54,
                                 size: 14,
-                              )
+                              ),
                             ],
                           ),
                         ),

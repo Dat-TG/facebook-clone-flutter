@@ -41,6 +41,18 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
       time: ['5 giờ'],
       shareWith: 'friends-of-friends',
     ),
+    Story(
+      user:
+          User(name: 'Minh Hương', avatar: 'assets/images/user/minhhuong.jpg'),
+      image: [
+        'assets/images/story/4.jpg',
+        'assets/images/story/5.jpg',
+        'assets/images/story/6.jpg',
+        'assets/images/story/7.jpg'
+      ],
+      time: ['1 phút'],
+      shareWith: 'friends',
+    ),
   ];
 
   final posts = [
