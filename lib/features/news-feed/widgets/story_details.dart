@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:facebook/models/story.dart';
@@ -17,6 +18,8 @@ class _StoryDetailsState extends State<StoryDetails> {
   List<double> progress = [];
   int index = 0;
   Timer? _timer;
+  bool buttonClick = false;
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
     for (int i = 0;
@@ -41,6 +44,30 @@ class _StoryDetailsState extends State<StoryDetails> {
         });
       }
     });
+    scrollController.addListener(() {
+      if (scrollController.offset > 0) {
+        _timer?.cancel();
+      } else {
+        if (_timer == null || (_timer != null && !_timer!.isActive)) {
+          setState(() {
+            _timer = Timer.periodic(oneSec, (Timer timer) {
+              if (mounted) {
+                setState(() {
+                  if (progress[index] < 1) {
+                    progress[index] += 0.0002;
+                  } else {
+                    if (index < progress.length - 1) {
+                      progress[index + 1] += 0.0002;
+                      index++;
+                    }
+                  }
+                });
+              }
+            });
+          });
+        }
+      }
+    });
     super.initState();
   }
 
@@ -52,35 +79,36 @@ class _StoryDetailsState extends State<StoryDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: GestureDetector(
-        onTapDown: (details) {
-          if (details.localPosition.direction < 1.0) {
-            setState(() {
-              progress[index] = 1;
-              if (index < progress.length - 1) {
-                progress[index + 1] = 0;
-                index++;
-              } else {
-                progress[0] = 0;
-                index = 0;
-              }
-            });
-          } else {
-            setState(() {
-              progress[index] = 0;
-              if (index > 0) {
-                progress[index - 1] = 0;
-                index--;
-              } else {
-                progress[progress.length - 1] = 0;
-                index = progress.length - 1;
-              }
-            });
-          }
-        },
-        child: Padding(
+    return GestureDetector(
+      onTapDown: (details) {
+        if (buttonClick) return;
+        if (details.localPosition.dx >= MediaQuery.of(context).size.width / 2) {
+          setState(() {
+            progress[index] = 1;
+            if (index < progress.length - 1) {
+              progress[index + 1] = 0;
+              index++;
+            } else {
+              progress[0] = 0;
+              index = 0;
+            }
+          });
+        } else {
+          setState(() {
+            progress[index] = 0;
+            if (index > 0) {
+              progress[index - 1] = 0;
+              index--;
+            } else {
+              progress[progress.length - 1] = 0;
+              index = progress.length - 1;
+            }
+          });
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 50),
           child: Container(
             decoration: BoxDecoration(
@@ -134,10 +162,27 @@ class _StoryDetailsState extends State<StoryDetails> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              CircleAvatar(
-                                backgroundImage:
-                                    AssetImage(widget.story.user.avatar),
-                                radius: 20,
+                              InkWell(
+                                onTapUp: (details) {
+                                  setState(() {
+                                    buttonClick = false;
+                                  });
+                                },
+                                onTapDown: (details) {
+                                  setState(() {
+                                    buttonClick = true;
+                                  });
+                                },
+                                onTapCancel: () {
+                                  setState(() {
+                                    buttonClick = false;
+                                  });
+                                },
+                                child: CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage(widget.story.user.avatar),
+                                  radius: 20,
+                                ),
                               ),
                               Container(
                                 constraints: const BoxConstraints(
@@ -186,31 +231,65 @@ class _StoryDetailsState extends State<StoryDetails> {
                             children: [
                               Material(
                                 color: Colors.transparent,
-                                child: IconButton(
-                                    padding: const EdgeInsets.all(0),
-                                    splashColor: Colors.white,
-                                    splashRadius: 20,
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.more_horiz_rounded,
-                                      size: 25,
-                                      color: Colors.white,
-                                    )),
+                                child: InkWell(
+                                  onTapUp: (details) {
+                                    setState(() {
+                                      buttonClick = false;
+                                    });
+                                  },
+                                  onTapDown: (details) {
+                                    setState(() {
+                                      buttonClick = true;
+                                    });
+                                  },
+                                  onTapCancel: () {
+                                    setState(() {
+                                      buttonClick = false;
+                                    });
+                                  },
+                                  child: IconButton(
+                                      padding: const EdgeInsets.all(0),
+                                      splashColor: Colors.white,
+                                      splashRadius: 20,
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.more_horiz_rounded,
+                                        size: 25,
+                                        color: Colors.white,
+                                      )),
+                                ),
                               ),
                               Material(
                                 color: Colors.transparent,
-                                child: IconButton(
-                                    padding: const EdgeInsets.all(0),
-                                    splashColor: Colors.white,
-                                    splashRadius: 20,
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: const Icon(
-                                      Icons.close_rounded,
-                                      size: 25,
-                                      color: Colors.white,
-                                    )),
+                                child: InkWell(
+                                  onTapUp: (details) {
+                                    setState(() {
+                                      buttonClick = false;
+                                    });
+                                  },
+                                  onTapDown: (details) {
+                                    setState(() {
+                                      buttonClick = true;
+                                    });
+                                  },
+                                  onTapCancel: () {
+                                    setState(() {
+                                      buttonClick = false;
+                                    });
+                                  },
+                                  child: IconButton(
+                                      padding: const EdgeInsets.all(0),
+                                      splashColor: Colors.white,
+                                      splashRadius: 20,
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: const Icon(
+                                        Icons.close_rounded,
+                                        size: 25,
+                                        color: Colors.white,
+                                      )),
+                                ),
                               )
                             ],
                           ),
@@ -222,109 +301,136 @@ class _StoryDetailsState extends State<StoryDetails> {
                         child: Image.asset(widget.story.image[index]),
                       ),
                     ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(20),
-                              onTap: () {},
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black.withOpacity(0.2),
-                                ),
-                                child: const Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 10,
-                                    top: 10,
-                                    bottom: 10,
-                                    right: 50,
+                    GestureDetector(
+                      onTapUp: (details) {
+                        setState(() {
+                          buttonClick = false;
+                        });
+                      },
+                      onTapDown: (details) {
+                        setState(() {
+                          buttonClick = true;
+                        });
+                      },
+                      onTapCancel: () {
+                        setState(() {
+                          buttonClick = false;
+                        });
+                      },
+                      child: SingleChildScrollView(
+                        controller: scrollController,
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(20),
+                                onTap: () {},
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.black.withOpacity(0.2),
                                   ),
-                                  child: Row(
-                                    children: [
-                                      ImageIcon(
-                                        AssetImage('assets/images/message.png'),
-                                        color: Colors.white,
-                                        size: 20,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        'Gửi tin nhắn...',
-                                        style: TextStyle(
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 10,
+                                      top: 10,
+                                      bottom: 10,
+                                      right: 50,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        ImageIcon(
+                                          AssetImage(
+                                              'assets/images/message.png'),
                                           color: Colors.white,
-                                          fontSize: 15,
+                                          size: 20,
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          'Gửi tin nhắn...',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Image.asset(
-                              'assets/images/reactions/like.png',
-                              width: 40,
-                              height: 40,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset(
+                                'assets/images/reactions/like.png',
+                                width: 40,
+                                height: 40,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Image.asset(
-                              'assets/images/reactions/love.png',
-                              width: 40,
-                              height: 40,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset(
+                                'assets/images/reactions/love.png',
+                                width: 40,
+                                height: 40,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Image.asset(
-                              'assets/images/reactions/care.png',
-                              width: 40,
-                              height: 40,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset(
+                                'assets/images/reactions/care.png',
+                                width: 40,
+                                height: 40,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Image.asset(
-                              'assets/images/reactions/haha.png',
-                              width: 40,
-                              height: 40,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset(
+                                'assets/images/reactions/haha.png',
+                                width: 40,
+                                height: 40,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Image.asset(
-                              'assets/images/reactions/wow.png',
-                              width: 40,
-                              height: 40,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset(
+                                'assets/images/reactions/wow.png',
+                                width: 40,
+                                height: 40,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Image.asset(
-                              'assets/images/reactions/sad.png',
-                              width: 40,
-                              height: 40,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset(
+                                'assets/images/reactions/sad.png',
+                                width: 40,
+                                height: 40,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Image.asset(
-                              'assets/images/reactions/angry.png',
-                              width: 40,
-                              height: 40,
-                            ),
-                          )
-                        ],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset(
+                                'assets/images/reactions/angry.png',
+                                width: 40,
+                                height: 40,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ],
