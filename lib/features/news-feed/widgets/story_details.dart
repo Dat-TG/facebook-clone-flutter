@@ -27,7 +27,7 @@ class _StoryDetailsState extends State<StoryDetails>
   void initState() {
     for (int i = 0;
         i <
-            widget.story.image.length +
+            (widget.story.image != null ? widget.story.image!.length : 0) +
                 (widget.story.video != null ? widget.story.video!.length : 0);
         i++) {
       progress.add(0);
@@ -35,7 +35,8 @@ class _StoryDetailsState extends State<StoryDetails>
     const oneSec = Duration(milliseconds: 1);
     _timer = Timer.periodic(oneSec, (Timer timer) {
       if (mounted) {
-        if (index >= widget.story.image.length) {
+        if (index >=
+            (widget.story.image != null ? widget.story.image!.length : 0)) {
           return;
         }
         setState(() {
@@ -52,9 +53,9 @@ class _StoryDetailsState extends State<StoryDetails>
     });
     scrollController.addListener(() {
       if (scrollController.offset > 0) {
-        if (index < widget.story.image.length) _timer?.cancel();
+        if (index < widget.story.image!.length) _timer?.cancel();
       } else {
-        if (index < widget.story.image.length) {
+        if (index < widget.story.image!.length) {
           if (_timer == null || (_timer != null && !_timer!.isActive)) {
             setState(() {
               _timer = Timer.periodic(oneSec, (Timer timer) {
@@ -83,7 +84,8 @@ class _StoryDetailsState extends State<StoryDetails>
       duration: const Duration(microseconds: 1),
     )..addListener(() {
         setState(() {
-          if (index >= widget.story.image.length) {
+          if (index >=
+              (widget.story.image != null ? widget.story.image!.length : 0)) {
             if (VideoPlayerScreen.videoDuration.compareTo(Duration.zero) > 0) {
               videoProgressController.duration =
                   VideoPlayerScreen.videoDuration;
@@ -115,7 +117,8 @@ class _StoryDetailsState extends State<StoryDetails>
 
   @override
   Widget build(BuildContext context) {
-    if (index >= widget.story.image.length) {
+    if (index >=
+        (widget.story.image != null ? widget.story.image!.length : 0)) {
       videoProgressController.repeat();
     }
     return GestureDetector(
@@ -152,17 +155,23 @@ class _StoryDetailsState extends State<StoryDetails>
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 50),
           child: Container(
-            decoration: (index < widget.story.image.length)
+            decoration: (index <
+                    (widget.story.image != null
+                        ? widget.story.image!.length
+                        : 0))
                 ? BoxDecoration(
                     image: DecorationImage(
-                      image: ExactAssetImage(widget.story.image[index]),
+                      image: ExactAssetImage(widget.story.image![index]),
                       fit: BoxFit.cover,
                     ),
                   )
                 : null,
             child: Stack(
               children: [
-                if (index < widget.story.image.length)
+                if (index <
+                    (widget.story.image != null
+                        ? widget.story.image!.length
+                        : 0))
                   BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                     child: Container(
@@ -170,17 +179,22 @@ class _StoryDetailsState extends State<StoryDetails>
                           BoxDecoration(color: Colors.black.withOpacity(0.1)),
                     ),
                   ),
-                (index >= widget.story.image.length)
+                (index >=
+                        (widget.story.image != null
+                            ? widget.story.image!.length
+                            : 0))
                     ? Center(
                         key: Key(index.toString()),
                         child: VideoPlayerScreen(
-                          video: widget
-                              .story.video![index - widget.story.image.length],
+                          video: widget.story.video![index -
+                              (widget.story.image != null
+                                  ? widget.story.image!.length
+                                  : 0)],
                         ),
                       )
                     : Center(
                         key: Key(index.toString()),
-                        child: Image.asset(widget.story.image[index]),
+                        child: Image.asset(widget.story.image![index]),
                       ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -192,7 +206,10 @@ class _StoryDetailsState extends State<StoryDetails>
                           Row(
                             children: [
                               for (int i = 0;
-                                  i < widget.story.image.length;
+                                  i <
+                                      (widget.story.image != null
+                                          ? widget.story.image!.length
+                                          : 0);
                                   i++)
                                 Expanded(
                                     child: Padding(
@@ -219,10 +236,18 @@ class _StoryDetailsState extends State<StoryDetails>
                                           Colors.grey.withOpacity(0.4),
                                       color: Colors.white,
                                       value: (index -
-                                                  widget.story.image.length ==
+                                                  (widget.story.image != null
+                                                      ? widget
+                                                          .story.image!.length
+                                                      : 0) ==
                                               i)
                                           ? videoProgressController.value
-                                          : (index - widget.story.image.length >
+                                          : (index -
+                                                      (widget.story.image !=
+                                                              null
+                                                          ? widget.story.image!
+                                                              .length
+                                                          : 0) >
                                                   i)
                                               ? 1
                                               : 0,
