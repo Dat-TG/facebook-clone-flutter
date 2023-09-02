@@ -48,8 +48,9 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
         'assets/images/story/4.jpg',
         'assets/images/story/5.jpg',
         'assets/images/story/6.jpg',
-        'assets/images/story/7.jpg'
+        'assets/images/story/7.jpg',
       ],
+      video: ['assets/videos/2.mp4', 'assets/videos/1.mp4'],
       time: ['1 phút'],
       shareWith: 'friends',
     ),

@@ -1,5 +1,6 @@
 import 'package:facebook/constants/global_variables.dart';
 import 'package:facebook/features/news-feed/widgets/story_details.dart';
+import 'package:facebook/features/news-feed/widgets/video_screen.dart';
 import 'package:facebook/models/story.dart';
 import 'package:flutter/material.dart';
 

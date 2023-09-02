@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:ui';
 
+import 'package:facebook/features/news-feed/widgets/video_screen.dart';
 import 'package:facebook/models/story.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 class StoryDetails extends StatefulWidget {
   static const String routeName = '/story-details';
@@ -14,12 +15,14 @@ class StoryDetails extends StatefulWidget {
   State<StoryDetails> createState() => _StoryDetailsState();
 }
 
-class _StoryDetailsState extends State<StoryDetails> {
+class _StoryDetailsState extends State<StoryDetails>
+    with TickerProviderStateMixin {
   List<double> progress = [];
   int index = 0;
   Timer? _timer;
   bool buttonClick = false;
   ScrollController scrollController = ScrollController();
+  late AnimationController videoProgressController;
   @override
   void initState() {
     for (int i = 0;
@@ -32,6 +35,9 @@ class _StoryDetailsState extends State<StoryDetails> {
     const oneSec = Duration(milliseconds: 1);
     _timer = Timer.periodic(oneSec, (Timer timer) {
       if (mounted) {
+        if (index >= widget.story.image.length) {
+          return;
+        }
         setState(() {
           if (progress[index] < 1) {
             progress[index] += 0.0002;
@@ -46,44 +52,78 @@ class _StoryDetailsState extends State<StoryDetails> {
     });
     scrollController.addListener(() {
       if (scrollController.offset > 0) {
-        _timer?.cancel();
+        if (index < widget.story.image.length) _timer?.cancel();
       } else {
-        if (_timer == null || (_timer != null && !_timer!.isActive)) {
-          setState(() {
-            _timer = Timer.periodic(oneSec, (Timer timer) {
-              if (mounted) {
-                setState(() {
-                  if (progress[index] < 1) {
-                    progress[index] += 0.0002;
-                  } else {
-                    if (index < progress.length - 1) {
-                      progress[index + 1] += 0.0002;
-                      index++;
+        if (index < widget.story.image.length) {
+          if (_timer == null || (_timer != null && !_timer!.isActive)) {
+            setState(() {
+              _timer = Timer.periodic(oneSec, (Timer timer) {
+                if (mounted) {
+                  setState(() {
+                    if (progress[index] < 1) {
+                      progress[index] += 0.0002;
+                    } else {
+                      if (index < progress.length - 1) {
+                        progress[index + 1] += 0.0002;
+                        index++;
+                      }
                     }
-                  }
-                });
-              }
+                  });
+                }
+              });
             });
-          });
+          }
         }
       }
     });
+    videoProgressController = AnimationController(
+      /// [AnimationController]s can be created with `vsync: this` because of
+      /// [TickerProviderStateMixin].
+      vsync: this,
+      duration: const Duration(microseconds: 1),
+    )..addListener(() {
+        setState(() {
+          if (index >= widget.story.image.length) {
+            if (VideoPlayerScreen.videoDuration.compareTo(Duration.zero) > 0) {
+              videoProgressController.duration =
+                  VideoPlayerScreen.videoDuration;
+            }
+          }
+          if (videoProgressController.value > 0.99) {
+            videoProgressController.value = 0;
+            if (index < progress.length - 1) {
+              index++;
+            } else {
+              index = 0;
+              for (int i = 0; i < progress.length; i++) {
+                progress[i] = 0;
+              }
+            }
+          }
+        });
+      });
+
     super.initState();
   }
 
   @override
   void dispose() {
     _timer?.cancel();
+    videoProgressController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (index >= widget.story.image.length) {
+      videoProgressController.repeat();
+    }
     return GestureDetector(
       onTapDown: (details) {
         if (buttonClick) return;
         if (details.localPosition.dx >= MediaQuery.of(context).size.width / 2) {
           setState(() {
+            videoProgressController.value = 0;
             progress[index] = 1;
             if (index < progress.length - 1) {
               progress[index + 1] = 0;
@@ -95,6 +135,7 @@ class _StoryDetailsState extends State<StoryDetails> {
           });
         } else {
           setState(() {
+            videoProgressController.value = 0;
             progress[index] = 0;
             if (index > 0) {
               progress[index - 1] = 0;
@@ -111,329 +152,369 @@ class _StoryDetailsState extends State<StoryDetails> {
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 50),
           child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: ExactAssetImage(widget.story.image[index]),
-                fit: BoxFit.cover,
-              ),
-            ),
+            decoration: (index < widget.story.image.length)
+                ? BoxDecoration(
+                    image: DecorationImage(
+                      image: ExactAssetImage(widget.story.image[index]),
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                : null,
             child: Stack(
               children: [
-                BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                  child: Container(
-                    decoration:
-                        BoxDecoration(color: Colors.black.withOpacity(0.1)),
-                  ),
-                ),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        for (int i = 0;
-                            i <
-                                widget.story.image.length +
-                                    (widget.story.video != null
-                                        ? widget.story.video!.length
-                                        : 0);
-                            i++)
-                          Expanded(
-                              child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 2),
-                            child: LinearProgressIndicator(
-                              backgroundColor: Colors.grey.withOpacity(0.4),
-                              color: Colors.white,
-                              value: progress[i],
-                              minHeight: 2,
-                            ),
-                          )),
-                      ],
+                if (index < widget.story.image.length)
+                  BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                    child: Container(
+                      decoration:
+                          BoxDecoration(color: Colors.black.withOpacity(0.1)),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 10,
-                        top: 10,
-                        bottom: 10,
-                        right: 0,
+                  ),
+                (index >= widget.story.image.length)
+                    ? Center(
+                        key: Key(index.toString()),
+                        child: VideoPlayerScreen(
+                          video: widget
+                              .story.video![index - widget.story.image.length],
+                        ),
+                      )
+                    : Center(
+                        key: Key(index.toString()),
+                        child: Image.asset(widget.story.image[index]),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
                         children: [
                           Row(
+                            children: [
+                              for (int i = 0;
+                                  i < widget.story.image.length;
+                                  i++)
+                                Expanded(
+                                    child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 2),
+                                  child: LinearProgressIndicator(
+                                    backgroundColor:
+                                        Colors.grey.withOpacity(0.4),
+                                    color: Colors.white,
+                                    value: progress[i],
+                                    minHeight: 2,
+                                  ),
+                                )),
+                              if (widget.story.video != null)
+                                for (int i = 0;
+                                    i < widget.story.video!.length;
+                                    i++)
+                                  Expanded(
+                                      child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 2),
+                                    child: LinearProgressIndicator(
+                                      backgroundColor:
+                                          Colors.grey.withOpacity(0.4),
+                                      color: Colors.white,
+                                      value: (index -
+                                                  widget.story.image.length ==
+                                              i)
+                                          ? videoProgressController.value
+                                          : (index - widget.story.image.length >
+                                                  i)
+                                              ? 1
+                                              : 0,
+                                      minHeight: 2,
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                              top: 10,
+                              bottom: 10,
+                              right: 0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTapUp: (details) {
+                                        setState(() {
+                                          buttonClick = false;
+                                        });
+                                      },
+                                      onTapDown: (details) {
+                                        setState(() {
+                                          buttonClick = true;
+                                        });
+                                      },
+                                      onTapCancel: () {
+                                        setState(() {
+                                          buttonClick = false;
+                                        });
+                                      },
+                                      child: CircleAvatar(
+                                        backgroundImage: AssetImage(
+                                            widget.story.user.avatar),
+                                        radius: 20,
+                                      ),
+                                    ),
+                                    Container(
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 150,
+                                      ),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Text(
+                                        widget.story.user.name,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      widget.story.time[0],
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Icon(
+                                        widget.story.shareWith == 'public'
+                                            ? Icons.public
+                                            : widget.story.shareWith ==
+                                                    'friends'
+                                                ? Icons.people
+                                                : widget.story.shareWith ==
+                                                        'friends-of-frends'
+                                                    ? Icons.groups
+                                                    : Icons.lock,
+                                        color: Colors.white,
+                                        size: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        onTapUp: (details) {
+                                          setState(() {
+                                            buttonClick = false;
+                                          });
+                                        },
+                                        onTapDown: (details) {
+                                          setState(() {
+                                            buttonClick = true;
+                                          });
+                                        },
+                                        onTapCancel: () {
+                                          setState(() {
+                                            buttonClick = false;
+                                          });
+                                        },
+                                        child: IconButton(
+                                            padding: const EdgeInsets.all(0),
+                                            splashColor: Colors.white,
+                                            splashRadius: 20,
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              Icons.more_horiz_rounded,
+                                              size: 25,
+                                              color: Colors.white,
+                                            )),
+                                      ),
+                                    ),
+                                    Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        onTapUp: (details) {
+                                          setState(() {
+                                            buttonClick = false;
+                                          });
+                                        },
+                                        onTapDown: (details) {
+                                          setState(() {
+                                            buttonClick = true;
+                                          });
+                                        },
+                                        onTapCancel: () {
+                                          setState(() {
+                                            buttonClick = false;
+                                          });
+                                        },
+                                        child: IconButton(
+                                            padding: const EdgeInsets.all(0),
+                                            splashColor: Colors.white,
+                                            splashRadius: 20,
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: const Icon(
+                                              Icons.close_rounded,
+                                              size: 25,
+                                              color: Colors.white,
+                                            )),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      GestureDetector(
+                        onTapUp: (details) {
+                          setState(() {
+                            buttonClick = false;
+                          });
+                        },
+                        onTapDown: (details) {
+                          setState(() {
+                            buttonClick = true;
+                          });
+                        },
+                        onTapCancel: () {
+                          setState(() {
+                            buttonClick = false;
+                          });
+                        },
+                        child: SingleChildScrollView(
+                          controller: scrollController,
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              InkWell(
-                                onTapUp: (details) {
-                                  setState(() {
-                                    buttonClick = false;
-                                  });
-                                },
-                                onTapDown: (details) {
-                                  setState(() {
-                                    buttonClick = true;
-                                  });
-                                },
-                                onTapCancel: () {
-                                  setState(() {
-                                    buttonClick = false;
-                                  });
-                                },
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage(widget.story.user.avatar),
-                                  radius: 20,
-                                ),
-                              ),
-                              Container(
-                                constraints: const BoxConstraints(
-                                  maxWidth: 150,
-                                ),
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  widget.story.user.name,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(20),
+                                  onTap: () {},
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.black.withOpacity(0.2),
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 10,
+                                        top: 10,
+                                        bottom: 10,
+                                        right: 50,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          ImageIcon(
+                                            AssetImage(
+                                                'assets/images/message.png'),
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            'Gửi tin nhắn...',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Text(
-                                widget.story.time[0],
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
                                 ),
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Icon(
-                                  widget.story.shareWith == 'public'
-                                      ? Icons.public
-                                      : widget.story.shareWith == 'friends'
-                                          ? Icons.people
-                                          : widget.story.shareWith ==
-                                                  'friends-of-frends'
-                                              ? Icons.groups
-                                              : Icons.lock,
-                                  color: Colors.white,
-                                  size: 14,
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Image.asset(
+                                  'assets/images/reactions/like.png',
+                                  width: 40,
+                                  height: 40,
                                 ),
                               ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTapUp: (details) {
-                                    setState(() {
-                                      buttonClick = false;
-                                    });
-                                  },
-                                  onTapDown: (details) {
-                                    setState(() {
-                                      buttonClick = true;
-                                    });
-                                  },
-                                  onTapCancel: () {
-                                    setState(() {
-                                      buttonClick = false;
-                                    });
-                                  },
-                                  child: IconButton(
-                                      padding: const EdgeInsets.all(0),
-                                      splashColor: Colors.white,
-                                      splashRadius: 20,
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.more_horiz_rounded,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Image.asset(
+                                  'assets/images/reactions/love.png',
+                                  width: 40,
+                                  height: 40,
                                 ),
                               ),
-                              Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTapUp: (details) {
-                                    setState(() {
-                                      buttonClick = false;
-                                    });
-                                  },
-                                  onTapDown: (details) {
-                                    setState(() {
-                                      buttonClick = true;
-                                    });
-                                  },
-                                  onTapCancel: () {
-                                    setState(() {
-                                      buttonClick = false;
-                                    });
-                                  },
-                                  child: IconButton(
-                                      padding: const EdgeInsets.all(0),
-                                      splashColor: Colors.white,
-                                      splashRadius: 20,
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      icon: const Icon(
-                                        Icons.close_rounded,
-                                        size: 25,
-                                        color: Colors.white,
-                                      )),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Image.asset(
+                                  'assets/images/reactions/care.png',
+                                  width: 40,
+                                  height: 40,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Image.asset(
+                                  'assets/images/reactions/haha.png',
+                                  width: 40,
+                                  height: 40,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Image.asset(
+                                  'assets/images/reactions/wow.png',
+                                  width: 40,
+                                  height: 40,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Image.asset(
+                                  'assets/images/reactions/sad.png',
+                                  width: 40,
+                                  height: 40,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Image.asset(
+                                  'assets/images/reactions/angry.png',
+                                  width: 40,
+                                  height: 40,
                                 ),
                               )
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Image.asset(widget.story.image[index]),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTapUp: (details) {
-                        setState(() {
-                          buttonClick = false;
-                        });
-                      },
-                      onTapDown: (details) {
-                        setState(() {
-                          buttonClick = true;
-                        });
-                      },
-                      onTapCancel: () {
-                        setState(() {
-                          buttonClick = false;
-                        });
-                      },
-                      child: SingleChildScrollView(
-                        controller: scrollController,
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(20),
-                                onTap: () {},
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.rectangle,
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.black.withOpacity(0.2),
-                                  ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 10,
-                                      top: 10,
-                                      bottom: 10,
-                                      right: 50,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        ImageIcon(
-                                          AssetImage(
-                                              'assets/images/message.png'),
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'Gửi tin nhắn...',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Image.asset(
-                                'assets/images/reactions/like.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Image.asset(
-                                'assets/images/reactions/love.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Image.asset(
-                                'assets/images/reactions/care.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Image.asset(
-                                'assets/images/reactions/haha.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Image.asset(
-                                'assets/images/reactions/wow.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Image.asset(
-                                'assets/images/reactions/sad.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Image.asset(
-                                'assets/images/reactions/angry.png',
-                                width: 40,
-                                height: 40,
-                              ),
-                            )
-                          ],
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
