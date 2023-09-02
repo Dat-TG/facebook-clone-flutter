@@ -1,4 +1,8 @@
+import 'package:facebook/features/watch/widgets/watch_video.dart';
 import 'package:flutter/material.dart';
+
+import '../../../models/post.dart';
+import '../../../models/user.dart';
 
 class WatchScreen extends StatefulWidget {
   static double offset = 0;
@@ -13,6 +17,59 @@ class _WatchScreenState extends State<WatchScreen> {
       ScrollController(initialScrollOffset: WatchScreen.offset);
   ScrollController headerScrollController = ScrollController();
   int index = 0;
+  final posts = [
+    Post(
+      user: User(name: 'Aki Michio', avatar: 'assets/images/user/aki.jpg'),
+      time: '14 thg 7, 2022',
+      shareWith: 'public',
+      content: 'Kawaiii quá vậy\nAnime : Con của mẹ kế là bạn gái cũ',
+      like: 15000,
+      angry: 3,
+      comment: 210,
+      haha: 3000,
+      love: 1100,
+      lovelove: 78,
+      sad: 36,
+      share: 98,
+      wow: 18,
+      video: ['assets/videos/4.mp4'],
+    ),
+    Post(
+      user: User(
+          name: 'Đài Phát Thanh.',
+          avatar: 'assets/images/user/daiphatthanh.jpg'),
+      time: '17 thg 1, 2021',
+      shareWith: 'public',
+      content:
+          'Bên anh đến khi già nếu anh cũng muốn ta cùng già ..\n-\nGià Cùng Anh Nếu Anh Cũng Muốn Già Cùng Em\nHIỀN MAI / Live Session…',
+      like: 12000,
+      angry: 1,
+      comment: 902,
+      haha: 21,
+      love: 2100,
+      lovelove: 67,
+      sad: 20,
+      share: 98,
+      wow: 5,
+      video: ['assets/videos/5.mp4'],
+    ),
+    Post(
+      user: User(name: 'Spezon', avatar: 'assets/images/user/spezon.jpg'),
+      time: '27 tháng 8',
+      shareWith: 'public',
+      content: 'Lionel Messi World cup Champion [Messi EP. FINAL]',
+      like: 4100,
+      angry: 1,
+      comment: 72,
+      haha: 21,
+      love: 888,
+      lovelove: 100,
+      sad: 20,
+      share: 98,
+      wow: 5,
+      video: ['assets/videos/6.mp4'],
+    ),
+  ];
 
   @override
   void dispose() {
@@ -303,7 +360,34 @@ class _WatchScreenState extends State<WatchScreen> {
             ),
           )
         ],
-        body: SingleChildScrollView(),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Column(children: [
+                Container(
+                  width: double.infinity,
+                  height: 5,
+                  color: Colors.black26,
+                ),
+                ...posts
+                    .map((e) => Column(
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            WatchVideo(post: e),
+                            Container(
+                              width: double.infinity,
+                              height: 5,
+                              color: Colors.black26,
+                            ),
+                          ],
+                        ))
+                    .toList(),
+              ])
+            ],
+          ),
+        ),
       ),
     );
   }

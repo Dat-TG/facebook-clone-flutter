@@ -39,6 +39,7 @@ class _PostContentState extends State<PostContent> {
         });
       },
       child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         child: widget.text.length == first.length
             ? Text(
