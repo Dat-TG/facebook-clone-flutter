@@ -3,6 +3,7 @@ import 'package:facebook/features/dating/screens/dating_screen.dart';
 import 'package:facebook/features/home/widgets/home_app_bar.dart';
 import 'package:facebook/features/news-feed/screen/news_feed_screen.dart';
 import 'package:facebook/features/notifications/screens/notifications_screen.dart';
+import 'package:facebook/features/watch/screens/watch_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController scrollController = ScrollController();
   late final list = <Widget>[
     NewsFeedScreen(parentScrollController: scrollController),
-    const Text('2'),
+    const WatchScreen(),
     const Text('3'),
     const DatingScreen(),
     const NotificationsScreen(),
