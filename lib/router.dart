@@ -9,8 +9,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(builder: (context) => const HomeScreen());
     case StoryDetails.routeName:
       final Story story = routeSettings.arguments as Story;
-      return MaterialPageRoute(
-          builder: (context) => StoryDetails(story: story));
+      return PageRouteBuilder(
+          opaque: false,
+          pageBuilder: (_, __, ___) => StoryDetails(story: story));
     default:
       return MaterialPageRoute(
           builder: (context) => const Scaffold(
