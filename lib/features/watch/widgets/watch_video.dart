@@ -1,28 +1,39 @@
 import 'package:facebook/features/news-feed/widgets/post_content.dart';
+import 'package:facebook/features/watch/screens/watch_screen.dart';
 import 'package:facebook/models/post.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+// ignore: must_be_immutable
 class WatchVideo extends StatefulWidget {
   final Post post;
-  const WatchVideo({super.key, required this.post});
+  final GlobalKey videoKey;
+  VideoControllerWrapper controller;
+  bool? autoPlay;
+  WatchVideo(
+      {super.key,
+      required this.post,
+      required this.videoKey,
+      required this.controller,
+      this.autoPlay});
 
   @override
   State<WatchVideo> createState() => _WatchVideoState();
 }
 
 class _WatchVideoState extends State<WatchVideo> {
-  late VideoPlayerController controller;
-  List<String> icons = [];
+  late List<String> icons = [];
   String reactions = '0';
   @override
   void initState() {
     super.initState();
-    controller = VideoPlayerController.asset(widget.post.video![0])
+    widget.controller.value = VideoPlayerController.asset(widget.post.video![0])
       ..initialize().then((value) {
         setState(() {
-          controller.setVolume(1.0);
-          controller.play();
+          widget.controller.value?.setVolume(1.0);
+          if (widget.autoPlay == true) {
+            widget.controller.value?.play();
+          }
         });
       });
     List<int> list = [
@@ -86,7 +97,7 @@ class _WatchVideoState extends State<WatchVideo> {
 
   @override
   void dispose() {
-    controller.dispose();
+    widget.controller.value?.dispose();
     super.dispose();
   }
 
@@ -198,12 +209,15 @@ class _WatchVideoState extends State<WatchVideo> {
           padding: const EdgeInsets.all(10),
           child: PostContent(text: widget.post.content!),
         ),
-        controller.value.isInitialized
+        widget.controller.value!.value.isInitialized
             ? Stack(
                 children: [
                   AspectRatio(
-                    aspectRatio: controller.value.aspectRatio,
-                    child: VideoPlayer(controller),
+                    aspectRatio: widget.controller.value!.value.aspectRatio,
+                    child: VideoPlayer(
+                      widget.controller.value!,
+                      key: widget.videoKey,
+                    ),
                   ),
                   Positioned(
                     top: 5,
@@ -223,14 +237,14 @@ class _WatchVideoState extends State<WatchVideo> {
                     child: IconButton(
                       onPressed: () {
                         setState(() {
-                          if (controller.value.volume > 0) {
-                            controller.setVolume(0);
+                          if (widget.controller.value!.value.volume > 0) {
+                            widget.controller.value!.setVolume(0);
                           } else {
-                            controller.setVolume(1.0);
+                            widget.controller.value!.setVolume(1.0);
                           }
                         });
                       },
-                      icon: controller.value.volume > 0
+                      icon: widget.controller.value!.value.volume > 0
                           ? const Icon(
                               Icons.volume_up_outlined,
                               color: Colors.white,

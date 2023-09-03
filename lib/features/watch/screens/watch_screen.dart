@@ -1,5 +1,7 @@
 import 'package:facebook/features/watch/widgets/watch_video.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../models/post.dart';
 import '../../../models/user.dart';
@@ -12,11 +14,17 @@ class WatchScreen extends StatefulWidget {
   State<WatchScreen> createState() => _WatchScreenState();
 }
 
+class VideoControllerWrapper {
+  VideoPlayerController? value;
+  VideoControllerWrapper(this.value);
+}
+
 class _WatchScreenState extends State<WatchScreen> {
   ScrollController scrollController =
       ScrollController(initialScrollOffset: WatchScreen.offset);
   ScrollController headerScrollController = ScrollController();
   int index = 0;
+  List<VideoControllerWrapper> videoController = [];
   final posts = [
     Post(
       user: User(name: 'Aki Michio', avatar: 'assets/images/user/aki.jpg'),
@@ -70,6 +78,16 @@ class _WatchScreenState extends State<WatchScreen> {
       video: ['assets/videos/6.mp4'],
     ),
   ];
+  List<GlobalKey> key = [];
+
+  @override
+  void initState() {
+    super.initState();
+    videoController =
+        List.generate(posts.length, (index) => VideoControllerWrapper(null));
+    key = List.generate(
+        posts.length, (index) => GlobalKey(debugLabel: index.toString()));
+  }
 
   @override
   void dispose() {
@@ -360,32 +378,68 @@ class _WatchScreenState extends State<WatchScreen> {
             ),
           )
         ],
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Column(children: [
-                Container(
-                  width: double.infinity,
-                  height: 5,
-                  color: Colors.black26,
+        body: NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification scroll) {
+            for (int i = 0; i < posts.length; i++) {
+              var currentContext = key[i].currentContext;
+              if (currentContext == null) continue;
+
+              var renderObject = currentContext.findRenderObject();
+              RenderAbstractViewport viewport =
+                  RenderAbstractViewport.of(renderObject);
+              var offsetToRevealBottom =
+                  viewport.getOffsetToReveal(renderObject!, 1.0);
+              var offsetToRevealTop =
+                  viewport.getOffsetToReveal(renderObject, 0.0);
+
+              if (offsetToRevealBottom.offset > scroll.metrics.pixels ||
+                  scroll.metrics.pixels > offsetToRevealTop.offset) {
+                //print('$i out of viewport');
+              } else {
+                //print('$i in viewport');
+                if (videoController[i].value != null) {
+                  if (videoController[i].value!.value.isInitialized) {
+                    videoController[i].value!.play();
+                  }
+                }
+              }
+            }
+            return false;
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 5,
+                      color: Colors.black26,
+                    ),
+                    ...posts.asMap().entries.map((e) {
+                      return Column(
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          WatchVideo(
+                            post: e.value,
+                            videoKey: key[e.key],
+                            controller: videoController[e.key],
+                            autoPlay: e.key == 0,
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 5,
+                            color: Colors.black26,
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ],
                 ),
-                ...posts
-                    .map((e) => Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            WatchVideo(post: e),
-                            Container(
-                              width: double.infinity,
-                              height: 5,
-                              color: Colors.black26,
-                            ),
-                          ],
-                        ))
-                    .toList(),
-              ])
-            ],
+              ],
+            ),
           ),
         ),
       ),
