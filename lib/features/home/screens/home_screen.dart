@@ -94,16 +94,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Center(
                                       child: Tab(
-                                        icon: Icon(
-                                          index != 0
-                                              ? Icons.home_outlined
-                                              : Icons.home_rounded,
-                                          color: index == 0
-                                              ? GlobalVariables.secondaryColor
-                                              : GlobalVariables.iconColor,
-                                          size: 30,
-                                          weight: 0.2,
-                                        ),
+                                        child: index != 0
+                                            ? Image.asset(
+                                                'assets/images/nav/home.png',
+                                                width: 30,
+                                                height: 30,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/nav/home-active.png',
+                                                width: 30,
+                                                height: 30,
+                                              ),
                                       ),
                                     ),
                                     if (index == 0)
@@ -143,14 +144,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Center(
                                       child: Tab(
-                                        icon: Icon(
-                                          Icons.ondemand_video_rounded,
-                                          color: index == 1
-                                              ? GlobalVariables.secondaryColor
-                                              : GlobalVariables.iconColor,
-                                          fill: 1,
-                                          size: 30,
-                                        ),
+                                        child: index != 1
+                                            ? Image.asset(
+                                                'assets/images/nav/watch.png',
+                                                width: 30,
+                                                height: 30,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/nav/watch-active.png',
+                                                width: 30,
+                                                height: 30,
+                                              ),
                                       ),
                                     ),
                                     if (index == 1)
@@ -190,17 +194,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Center(
                                       child: Tab(
-                                        icon: Icon(
-                                          index != 2
-                                              ? Icons
-                                                  .store_mall_directory_outlined
-                                              : Icons
-                                                  .store_mall_directory_rounded,
-                                          color: index == 2
-                                              ? GlobalVariables.secondaryColor
-                                              : GlobalVariables.iconColor,
-                                          size: 30,
-                                        ),
+                                        child: index != 2
+                                            ? Image.asset(
+                                                'assets/images/nav/marketplace.png',
+                                                width: 30,
+                                                height: 30,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/nav/marketplace-active.png',
+                                                width: 30,
+                                                height: 30,
+                                              ),
                                       ),
                                     ),
                                     if (index == 2)
@@ -240,15 +244,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Center(
                                       child: Tab(
-                                        icon: Icon(
-                                          index != 3
-                                              ? Icons.favorite_outline
-                                              : Icons.favorite,
-                                          color: index == 3
-                                              ? GlobalVariables.secondaryColor
-                                              : GlobalVariables.iconColor,
-                                          size: 30,
-                                        ),
+                                        child: index != 3
+                                            ? Image.asset(
+                                                'assets/images/nav/dating.jpg',
+                                                width: 30,
+                                                height: 30,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/nav/dating-active.jpg',
+                                                width: 30,
+                                                height: 30,
+                                              ),
                                       ),
                                     ),
                                     if (index == 3)
@@ -288,16 +294,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Center(
                                       child: Tab(
-                                        icon: Icon(
-                                          index != 4
-                                              ? Icons
-                                                  .notifications_none_outlined
-                                              : Icons.notifications,
-                                          color: index == 4
-                                              ? GlobalVariables.secondaryColor
-                                              : GlobalVariables.iconColor,
-                                          size: 30,
-                                        ),
+                                        child: index != 4
+                                            ? Image.asset(
+                                                'assets/images/nav/noti.jpg',
+                                                width: 30,
+                                                height: 30,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/nav/noti-active.jpg',
+                                                width: 30,
+                                                height: 30,
+                                              ),
                                       ),
                                     ),
                                     if (index == 4)
