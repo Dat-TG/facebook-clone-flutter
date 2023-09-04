@@ -32,7 +32,9 @@ class _WatchVideoState extends State<WatchVideo> {
         setState(() {
           widget.controller.value?.setVolume(1.0);
           if (widget.autoPlay == true) {
-            widget.controller.value?.play();
+            if (WatchScreen.offset == 0) {
+              widget.controller.value?.play();
+            }
           }
         });
       });

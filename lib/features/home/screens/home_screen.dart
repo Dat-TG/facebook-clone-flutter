@@ -1,6 +1,7 @@
 import 'package:facebook/constants/global_variables.dart';
 import 'package:facebook/features/dating/screens/dating_screen.dart';
 import 'package:facebook/features/home/widgets/home_app_bar.dart';
+import 'package:facebook/features/menu/screens/menu_screen.dart';
 import 'package:facebook/features/news-feed/screen/news_feed_screen.dart';
 import 'package:facebook/features/notifications/screens/notifications_screen.dart';
 import 'package:facebook/features/watch/screens/watch_screen.dart';
@@ -20,11 +21,17 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController scrollController = ScrollController();
   late final list = <Widget>[
     NewsFeedScreen(parentScrollController: scrollController),
-    const WatchScreen(),
+    const WatchScreen(
+      key: Key('watch-screen'),
+    ),
     const Text('3'),
-    const DatingScreen(),
-    const NotificationsScreen(),
-    const Text('6')
+    const DatingScreen(
+      key: Key('dating-screen'),
+    ),
+    const NotificationsScreen(
+      key: Key('notifications-screen'),
+    ),
+    const MenuScreen()
   ];
   @override
   void initState() {

@@ -93,6 +93,9 @@ class _WatchScreenState extends State<WatchScreen> {
   void dispose() {
     scrollController.dispose();
     headerScrollController.dispose();
+    /*for (int i = 0; i < videoController.length; i++) {
+      videoController[i].value?.dispose();
+    }*/
     super.dispose();
   }
 
@@ -407,6 +410,7 @@ class _WatchScreenState extends State<WatchScreen> {
             return false;
           },
           child: SingleChildScrollView(
+            controller: scrollController,
             child: Column(
               children: [
                 Column(
