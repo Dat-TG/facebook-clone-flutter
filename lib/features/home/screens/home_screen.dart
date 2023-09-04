@@ -344,13 +344,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Center(
                                       child: Tab(
-                                        icon: Icon(
-                                          Icons.menu,
-                                          color: index == 5
-                                              ? GlobalVariables.secondaryColor
-                                              : GlobalVariables.iconColor,
-                                          size: 30,
-                                        ),
+                                        child: index != 5
+                                            ? Image.asset(
+                                                'assets/images/nav/menu.png',
+                                                width: 24,
+                                                height: 24,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/nav/menu-active.png',
+                                                width: 24,
+                                                height: 24,
+                                              ),
                                       ),
                                     ),
                                     if (index == 5)
