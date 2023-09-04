@@ -1,6 +1,7 @@
 import 'package:facebook/constants/global_variables.dart';
 import 'package:facebook/features/dating/screens/dating_screen.dart';
 import 'package:facebook/features/home/widgets/home_app_bar.dart';
+import 'package:facebook/features/market_place/screens/market_place_screen.dart';
 import 'package:facebook/features/menu/screens/menu_screen.dart';
 import 'package:facebook/features/news-feed/screen/news_feed_screen.dart';
 import 'package:facebook/features/notifications/screens/notifications_screen.dart';
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const WatchScreen(
       key: Key('watch-screen'),
     ),
-    const Text('3'),
+    const MarketPlaceScreen(),
     const DatingScreen(
       key: Key('dating-screen'),
     ),
@@ -101,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? GlobalVariables.secondaryColor
                                               : GlobalVariables.iconColor,
                                           size: 30,
-                                          grade: 10,
+                                          weight: 0.2,
                                         ),
                                       ),
                                     ),
