@@ -26,7 +26,7 @@ class _MarketPlaceScreenState extends State<MarketPlaceScreen> {
           User(name: 'Minh Hương', avatar: 'assets/images/user/minhhuong.jpg'),
       status: 'Mới',
       description:
-          'Thuốc nhuộm tóc màu Xanh Dương Đen Khói không tẩy/n💙 Xanh Dương Đen Khói trầm hơn Light Blue Sea và sáng hơn Xanh Than - một màu xanh cân bằng để ai cũng có thể nhuộm được. Điểm "ăn khách" nhất ở màu này theo Cheng chính là ánh khói nhẹ nhàng, giúp cho mái tóc có độ bóng cực kì ảo diệu mà vẫn giữ được nền tối hợp với mọi tone da./n💙 Xanh Dương Đen Khói mang vẻ đẹp năng động, hiện đại và cá tính. Không chỉ hợp với những chuyến du lịch, chụp ảnh, nhuộm tóc màu Xanh Dương Đen Khói nhẹ có thể diện đi học, đi làm mà không bị lộ liễu hay rực rỡ quá./n💙 Thuốc nhuộm Xanh Dương Đen Khói chỉ từ 65k. Hãy nhắn tin cho Cheng nếu bạn cần tư vấn thêm về cách nhuộm tại nhà./n🔸 Tặng ngay 1 lọ trợ dưỡng khi mua hàng/n🔸 Phù hợp với mọi tone da/n🔸 Lên từ nền tóc đen tự nhiên không cần nâng tẩy/n🔸 Độ bền màu: 1-1,5 tháng/n🔸 Cách sử dụng: trộn thuốc nhuộm tóc Xanh Dương Đen Khói theo công thức và làm theo các bước nhuộm. Tất cả có trong hướng dẫn đính kèm sản phẩm.',
+          'Thuốc nhuộm tóc màu Xanh Dương Đen Khói không tẩy\n💙 Xanh Dương Đen Khói trầm hơn Light Blue Sea và sáng hơn Xanh Than - một màu xanh cân bằng để ai cũng có thể nhuộm được. Điểm "ăn khách" nhất ở màu này theo Cheng chính là ánh khói nhẹ nhàng, giúp cho mái tóc có độ bóng cực kì ảo diệu mà vẫn giữ được nền tối hợp với mọi tone da.\n💙 Xanh Dương Đen Khói mang vẻ đẹp năng động, hiện đại và cá tính. Không chỉ hợp với những chuyến du lịch, chụp ảnh, nhuộm tóc màu Xanh Dương Đen Khói nhẹ có thể diện đi học, đi làm mà không bị lộ liễu hay rực rỡ quá.\n💙 Thuốc nhuộm Xanh Dương Đen Khói chỉ từ 65k. Hãy nhắn tin cho Cheng nếu bạn cần tư vấn thêm về cách nhuộm tại nhà.\n🔸 Tặng ngay 1 lọ trợ dưỡng khi mua hàng\n🔸 Phù hợp với mọi tone da\n🔸 Lên từ nền tóc đen tự nhiên không cần nâng tẩy\n🔸 Độ bền màu: 1-1,5 tháng\n🔸 Cách sử dụng: trộn thuốc nhuộm tóc Xanh Dương Đen Khói theo công thức và làm theo các bước nhuộm. Tất cả có trong hướng dẫn đính kèm sản phẩm.',
       location: 'Hồ Chí Minh',
       images: [
         'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lj2ffdt2aolo12',
@@ -120,7 +120,7 @@ class _MarketPlaceScreenState extends State<MarketPlaceScreen> {
           avatar: 'assets/images/user/vuonghongthuy.jpg'),
       status: 'Đã qua sử dụng - Như mới',
       description:
-          '💥 Hình ảnh là do shop chụp 100% /n💥 Khách nhận hàng Đúng như mô tả/n💥 Không độn size sản phẩm/n💥 Gửi hàng nhanh nhất có thể/n💥 đóng hàng luôn đầy đủ full bill full box tặng kèm tất và hộp chống sốc',
+          '💥 Hình ảnh là do shop chụp 100% \n💥 Khách nhận hàng Đúng như mô tả\n💥 Không độn size sản phẩm\n💥 Gửi hàng nhanh nhất có thể\n💥 đóng hàng luôn đầy đủ full bill full box tặng kèm tất và hộp chống sốc',
       location: 'Hà Nội',
       images: [
         'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lkmf4auzqweo26',
@@ -527,7 +527,7 @@ class _MarketPlaceScreenState extends State<MarketPlaceScreen> {
                       ],
                     ),
                 ],
-              )
+              ),
             ],
           ),
         ),

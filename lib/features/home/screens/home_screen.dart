@@ -1,4 +1,3 @@
-import 'package:facebook/constants/global_variables.dart';
 import 'package:facebook/features/dating/screens/dating_screen.dart';
 import 'package:facebook/features/home/widgets/home_app_bar.dart';
 import 'package:facebook/features/market_place/screens/market_place_screen.dart';

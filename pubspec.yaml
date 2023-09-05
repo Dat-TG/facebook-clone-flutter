@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.0.5
   video_player: ^2.7.1
+  carousel_slider: ^4.2.1
+  webview_flutter: ^4.2.4
 
 dev_dependencies:
   flutter_test:
