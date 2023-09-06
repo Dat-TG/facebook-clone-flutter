@@ -214,7 +214,8 @@ class _PostCardState extends State<PostCard> {
             ],
           ),
         ),
-        PostContent(text: widget.post.content!),
+        if (widget.post.layout != 'quote')
+          PostContent(text: widget.post.content!),
         Container(
           width: double.infinity,
           color: widget.post.layout == 'frame'
@@ -488,7 +489,120 @@ class _PostCardState extends State<PostCard> {
                             ],
                           ),
                         )
-                      : Image.asset(widget.post.image![0]),
+                      : widget.post.layout == 'quote'
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5),
+                                  child: Image.asset(
+                                    widget.post.image![0],
+                                    width: double.infinity,
+                                    height: min(200, leftImageHeight),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Center(
+                                    child: Text(
+                                  widget.post.content!,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 17,
+                                  ),
+                                )),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      for (int i = 1;
+                                          i < min(widget.post.image!.length, 5);
+                                          i++)
+                                        Padding(
+                                          padding: i % 2 == 0
+                                              ? i <
+                                                      min(
+                                                              widget.post.image!
+                                                                  .length,
+                                                              5) -
+                                                          1
+                                                  ? const EdgeInsets.only(
+                                                      right: 5,
+                                                    )
+                                                  : EdgeInsets.zero
+                                              : i <
+                                                      min(
+                                                              widget.post.image!
+                                                                  .length,
+                                                              5) -
+                                                          1
+                                                  ? const EdgeInsets.only(
+                                                      right: 5,
+                                                    )
+                                                  : EdgeInsets.zero,
+                                          child: Stack(
+                                            children: [
+                                              Image.asset(
+                                                widget.post.image![i],
+                                                width: (MediaQuery.of(context)
+                                                            .size
+                                                            .width -
+                                                        20 -
+                                                        (min(
+                                                                    widget
+                                                                        .post
+                                                                        .image!
+                                                                        .length,
+                                                                    5) -
+                                                                2) *
+                                                            5) /
+                                                    (min(
+                                                            widget.post.image!
+                                                                .length,
+                                                            5) -
+                                                        1),
+                                                fit: BoxFit.cover,
+                                                height:
+                                                    min(leftImageHeight, 200),
+                                              ),
+                                              if (i == 4 &&
+                                                  widget.post.image!.length > 5)
+                                                Positioned.fill(
+                                                  child: Center(
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      width: double.infinity,
+                                                      height: double.infinity,
+                                                      color: Colors.black
+                                                          .withOpacity(0.3),
+                                                      child: Text(
+                                                        '+${widget.post.image!.length - i - 1}',
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 18,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            )
+                          : Image.asset(widget.post.image![0]),
         ),
         Padding(
           padding: const EdgeInsets.only(
