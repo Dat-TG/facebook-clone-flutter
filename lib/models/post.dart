@@ -18,6 +18,7 @@ class Post {
   final int? comment;
   final int? share;
   final int? wow;
+  final String? layout; // classic, column, quote, frame
   Post({
     required this.user,
     required this.time,
@@ -36,5 +37,6 @@ class Post {
     this.comment,
     this.share,
     this.wow,
+    this.layout,
   });
 }

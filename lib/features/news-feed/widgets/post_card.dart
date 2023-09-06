@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'dart:io';
+import 'dart:math';
+import 'dart:ui' as ui;
+
 import 'package:facebook/features/news-feed/widgets/post_content.dart';
 import 'package:facebook/models/post.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +18,7 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   List<String> icons = [];
   String reactions = '0';
+  double leftImageHeight = 0;
   @override
   void initState() {
     super.initState();
@@ -72,6 +78,39 @@ class _PostCardState extends State<PostCard> {
       } else if (list[1] == widget.post.angry) {
         icons.add('assets/images/reactions/angry.png');
       }
+    });
+    _calculateImageDimension();
+  }
+
+  _calculateImageDimension() async {
+    Completer<Size> completer = Completer();
+    Image image = Image.asset(widget.post.image![0]);
+    image.image.resolve(const ImageConfiguration()).addListener(
+      ImageStreamListener(
+        (ImageInfo image, bool synchronousCall) {
+          var myImage = image.image;
+          Size size = Size(myImage.width.toDouble(), myImage.height.toDouble());
+          completer.complete(size);
+        },
+      ),
+    );
+    await completer.future.then((value) {
+      setState(() {
+        if (widget.post.image!.length > 2 && widget.post.image!.length < 5) {
+          leftImageHeight = MediaQuery.of(context).size.width *
+              2 /
+              3 *
+              0.99 *
+              value.height /
+              value.width;
+        } else {
+          leftImageHeight = MediaQuery.of(context).size.width /
+              2 *
+              0.99 *
+              value.height /
+              value.width;
+        }
+      });
     });
   }
 
@@ -175,13 +214,180 @@ class _PostCardState extends State<PostCard> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: PostContent(text: widget.post.content!),
-        ),
-        Image.asset(
-          widget.post.image![0],
-          fit: BoxFit.fitWidth,
+        PostContent(text: widget.post.content!),
+        Container(
+          width: double.infinity,
+          color: widget.post.layout == 'frame'
+              ? Colors.black.withOpacity(0.1)
+              : Colors.white,
+          padding: EdgeInsets.all(widget.post.layout == 'frame' ? 10 : 0),
+          child: ((widget.post.video != null ? widget.post.video!.length : 0) +
+                      (widget.post.image != null
+                          ? widget.post.image!.length
+                          : 0) ==
+                  1)
+              ? Image.asset((widget.post.image != null)
+                  ? widget.post.image![0]
+                  : widget.post.video![0])
+              : widget.post.layout == 'classic'
+                  ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          children: [
+                            Image.asset(
+                              widget.post.image![0],
+                              width: (widget.post.image!.length > 2 &&
+                                      widget.post.image!.length < 5)
+                                  ? MediaQuery.of(context).size.width *
+                                      2 /
+                                      3 *
+                                      0.99
+                                  : MediaQuery.of(context).size.width /
+                                      2 *
+                                      0.99,
+                              height: widget.post.image!.length >= 5
+                                  ? leftImageHeight / 2 -
+                                      MediaQuery.of(context).size.width /
+                                          2 *
+                                          0.005
+                                  : leftImageHeight,
+                              fit: BoxFit.cover,
+                            ),
+                            if (widget.post.image!.length >= 5)
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.width /
+                                        2 *
+                                        0.01),
+                                child: Image.asset(
+                                  widget.post.image![1],
+                                  width: MediaQuery.of(context).size.width /
+                                      2 *
+                                      0.99,
+                                  height: leftImageHeight / 2 -
+                                      MediaQuery.of(context).size.width /
+                                          2 *
+                                          0.005,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: widget.post.image!.length > 2 &&
+                                  widget.post.image!.length < 5
+                              ? MediaQuery.of(context).size.width * 2 / 3 * 0.01
+                              : MediaQuery.of(context).size.width / 2 * 0.02,
+                        ),
+                        ((widget.post.video != null
+                                        ? widget.post.video!.length
+                                        : 0) +
+                                    (widget.post.image != null
+                                        ? widget.post.image!.length
+                                        : 0) >
+                                1)
+                            ? Column(
+                                children: [
+                                  for (int i =
+                                          widget.post.image!.length < 5 ? 1 : 2;
+                                      i < min(widget.post.image!.length, 5);
+                                      i++)
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 0,
+                                        bottom: i <
+                                                widget.post.image!.length - 1
+                                            ? widget.post.image!.length > 2 &&
+                                                    widget.post.image!.length <
+                                                        5
+                                                ? MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    2 /
+                                                    3 *
+                                                    0.01
+                                                : MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2 *
+                                                    0.01
+                                            : 0,
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Image.asset(
+                                            widget.post.image![i],
+                                            width: widget.post.image!.length >
+                                                        2 &&
+                                                    widget.post.image!.length <
+                                                        5
+                                                ? MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    3
+                                                : MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2 *
+                                                    0.99,
+                                            height: i <
+                                                    widget.post.image!.length -
+                                                        1
+                                                ? widget.post.image!.length < 5
+                                                    ? leftImageHeight /
+                                                            (widget.post.image!
+                                                                    .length -
+                                                                1) -
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            2 /
+                                                            3 *
+                                                            0.01
+                                                    : leftImageHeight / 3 -
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            2 *
+                                                            0.01
+                                                : widget.post.image!.length < 5
+                                                    ? leftImageHeight /
+                                                        (widget.post.image!
+                                                                .length -
+                                                            1)
+                                                    : leftImageHeight / 3,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          if (i == 4 &&
+                                              widget.post.image!.length > 5)
+                                            Positioned.fill(
+                                                child: Center(
+                                              child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  color: Colors.black
+                                                      .withOpacity(0.3),
+                                                  child: Text(
+                                                    '+${widget.post.image!.length - i - 1}',
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 18,
+                                                    ),
+                                                  )),
+                                            ))
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              )
+                            : const SizedBox(),
+                      ],
+                    )
+                  : Image.asset(widget.post.image![0]),
         ),
         Padding(
           padding: const EdgeInsets.only(
