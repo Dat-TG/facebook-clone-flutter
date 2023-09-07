@@ -598,7 +598,10 @@ class _CommentScreenState extends State<CommentScreen> {
                                       ),
                                     ),
                                     for (int i = 0; i < comments.length; i++)
-                                      SingleComment(comment: comments[i]),
+                                      SingleComment(
+                                        comment: comments[i],
+                                        level: 0,
+                                      ),
                                   ],
                                 ),
                               ),

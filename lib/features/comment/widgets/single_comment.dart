@@ -1,17 +1,30 @@
+import 'dart:math';
+
 import 'package:facebook/models/comment.dart';
 import 'package:flutter/material.dart';
 
 class SingleComment extends StatefulWidget {
   final Comment comment;
-  const SingleComment({super.key, required this.comment});
+  final int level;
+  const SingleComment({super.key, required this.comment, required this.level});
 
   @override
   State<SingleComment> createState() => _SingleCommentState();
 }
 
+Size _textSize(String text, TextStyle style) {
+  final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      maxLines: 1,
+      textDirection: TextDirection.ltr)
+    ..layout(minWidth: 0, maxWidth: double.infinity);
+  return textPainter.size;
+}
+
 class _SingleCommentState extends State<SingleComment> {
   List<String> icons = [];
   String reactions = '0';
+  bool viewReplies = false;
 
   @override
   void initState() {
@@ -114,10 +127,16 @@ class _SingleCommentState extends State<SingleComment> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 5,
-      ),
+      padding: widget.level == 0
+          ? const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 5,
+            )
+          : EdgeInsets.only(
+              left: widget.level == 1 ? 45 : 45 + (widget.level - 1) * 35,
+              top: 5,
+              bottom: 5,
+            ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +155,7 @@ class _SingleCommentState extends State<SingleComment> {
                 ),
                 child: CircleAvatar(
                   backgroundImage: AssetImage(widget.comment.user.avatar),
-                  radius: 20,
+                  radius: widget.level > 0 ? 15 : 20,
                 ),
               ),
               const SizedBox(
@@ -144,10 +163,21 @@ class _SingleCommentState extends State<SingleComment> {
               ),
               (widget.comment.content.isNotEmpty)
                   ? Container(
-                      width: MediaQuery.of(context).size.width -
-                          15 * 2 -
-                          20 * 2 -
-                          5,
+                      width: min(
+                        MediaQuery.of(context).size.width -
+                            15 * 2 -
+                            20 * 2 -
+                            5 -
+                            35 * widget.level,
+                        _textSize(
+                              widget.comment.content,
+                              const TextStyle(
+                                fontSize: 16,
+                                overflow: TextOverflow.visible,
+                              ),
+                            ).width +
+                            20,
+                      ),
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -233,9 +263,9 @@ class _SingleCommentState extends State<SingleComment> {
           ),
           if (widget.comment.image != null)
             Padding(
-              padding: const EdgeInsets.only(
+              padding: EdgeInsets.only(
                 bottom: 5,
-                left: 45,
+                left: widget.level == 0 ? 45 : 45 + widget.level * 35,
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
@@ -249,8 +279,8 @@ class _SingleCommentState extends State<SingleComment> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                width: 50,
+              SizedBox(
+                width: widget.level == 0 ? 50 : 40,
               ),
               Text(
                 widget.comment.time,
@@ -351,7 +381,31 @@ class _SingleCommentState extends State<SingleComment> {
                   ],
                 ),
             ],
-          )
+          ),
+          if (widget.comment.replies.isNotEmpty && !viewReplies)
+            Padding(
+              padding: const EdgeInsets.only(top: 5, left: 40),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    viewReplies = true;
+                  });
+                },
+                child: Text(
+                  'Xem ${widget.comment.replies.length} phản hồi',
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          if (viewReplies)
+            for (int i = 0; i < widget.comment.replies.length; i++)
+              SingleComment(
+                comment: widget.comment.replies[i],
+                level: widget.level + 1,
+              ),
         ],
       ),
     );
