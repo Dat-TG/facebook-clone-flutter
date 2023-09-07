@@ -12,10 +12,13 @@ class CommentScreen extends StatefulWidget {
   State<CommentScreen> createState() => _CommentScreenState();
 }
 
+enum SortingOption { fit, newest, all }
+
 class _CommentScreenState extends State<CommentScreen> {
   List<String> icons = [];
   String reactions = '0';
   bool isInWidgetTree = true;
+  SortingOption _sortingOption = SortingOption.fit;
 
   @override
   void initState() {
@@ -118,7 +121,7 @@ class _CommentScreenState extends State<CommentScreen> {
                           child: Column(
                             children: [
                               Container(
-                                height: 70,
+                                height: 60,
                                 padding: const EdgeInsets.only(
                                   left: 15,
                                   right: 15,
@@ -194,9 +197,380 @@ class _CommentScreenState extends State<CommentScreen> {
                               ),
                               SizedBox(
                                 height: MediaQuery.of(context).size.height -
-                                    70 -
+                                    60 -
                                     MediaQuery.of(context).padding.vertical,
-                                child: SingleChildScrollView(),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showModalBottomSheet<void>(
+                                              context: context,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(20),
+                                                  topRight: Radius.circular(20),
+                                                ),
+                                              ),
+                                              builder: (BuildContext context) {
+                                                return StatefulBuilder(builder:
+                                                    (context, setLocalState) {
+                                                  return DecoratedBox(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      shape: BoxShape.rectangle,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(10),
+                                                            child: Container(
+                                                              height: 4,
+                                                              width: 40,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color:
+                                                                    Colors.grey,
+                                                                shape: BoxShape
+                                                                    .rectangle,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Material(
+                                                          color: Colors
+                                                              .transparent,
+                                                          child: ListTile(
+                                                            onTap: () {
+                                                              setLocalState(() {
+                                                                _sortingOption =
+                                                                    SortingOption
+                                                                        .fit;
+                                                              });
+                                                              setState(() {
+                                                                _sortingOption =
+                                                                    SortingOption
+                                                                        .fit;
+                                                              });
+                                                            },
+                                                            title: const Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  'Phù hợp nhất',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 3,
+                                                                ),
+                                                                Text(
+                                                                  'Hiển thị bình luận của bạn bè và những bình luận có nhiều tương tác nhất trước tiên.',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                    color: Colors
+                                                                        .black54,
+                                                                    height: 1.4,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            leading: Container(
+                                                              width: 40,
+                                                              height: 40,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                color: Colors
+                                                                    .grey[300],
+                                                              ),
+                                                              child: Transform
+                                                                  .scale(
+                                                                scale: 1.1,
+                                                                child: Radio<
+                                                                    SortingOption>(
+                                                                  activeColor:
+                                                                      Colors
+                                                                          .black,
+                                                                  value:
+                                                                      SortingOption
+                                                                          .fit,
+                                                                  groupValue:
+                                                                      _sortingOption,
+                                                                  onChanged:
+                                                                      (SortingOption?
+                                                                          value) {
+                                                                    setLocalState(
+                                                                        () {
+                                                                      _sortingOption =
+                                                                          value ??
+                                                                              SortingOption.fit;
+                                                                    });
+                                                                    setState(
+                                                                      () {
+                                                                        _sortingOption =
+                                                                            value ??
+                                                                                SortingOption.fit;
+                                                                      },
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Material(
+                                                          color: Colors
+                                                              .transparent,
+                                                          child: ListTile(
+                                                            onTap: () {
+                                                              setLocalState(() {
+                                                                _sortingOption =
+                                                                    SortingOption
+                                                                        .newest;
+                                                              });
+                                                              setState(() {
+                                                                _sortingOption =
+                                                                    SortingOption
+                                                                        .newest;
+                                                              });
+                                                            },
+                                                            title: const Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  'Mới nhất',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 3,
+                                                                ),
+                                                                Text(
+                                                                  'Hiển thị các bình luận mới nhất trước tiên. Một số bình luận đã được lọc ra.',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                    color: Colors
+                                                                        .black54,
+                                                                    height: 1.4,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            leading: Container(
+                                                              width: 40,
+                                                              height: 40,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                color: Colors
+                                                                    .grey[300],
+                                                              ),
+                                                              child: Transform
+                                                                  .scale(
+                                                                scale: 1.1,
+                                                                child: Radio<
+                                                                    SortingOption>(
+                                                                  activeColor:
+                                                                      Colors
+                                                                          .black,
+                                                                  value:
+                                                                      SortingOption
+                                                                          .newest,
+                                                                  groupValue:
+                                                                      _sortingOption,
+                                                                  onChanged:
+                                                                      (SortingOption?
+                                                                          value) {
+                                                                    setLocalState(
+                                                                        () {
+                                                                      _sortingOption =
+                                                                          value ??
+                                                                              SortingOption.newest;
+                                                                    });
+                                                                    setState(
+                                                                        () {
+                                                                      _sortingOption =
+                                                                          value ??
+                                                                              SortingOption.newest;
+                                                                    });
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Material(
+                                                          color: Colors
+                                                              .transparent,
+                                                          child: ListTile(
+                                                            onTap: () {
+                                                              setLocalState(() {
+                                                                _sortingOption =
+                                                                    SortingOption
+                                                                        .all;
+                                                              });
+                                                              setState(() {
+                                                                _sortingOption =
+                                                                    SortingOption
+                                                                        .all;
+                                                              });
+                                                            },
+                                                            title: const Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  'Tất cả bình luận',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 3,
+                                                                ),
+                                                                Text(
+                                                                  'Hiển thị tất cả bình luận, bao gồm cả nội dung có thể là spam. Những bình luận phù hợp nhất sẽ hiển thị đầu tiên.',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                    color: Colors
+                                                                        .black54,
+                                                                    height: 1.4,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            leading: Container(
+                                                              width: 40,
+                                                              height: 40,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                color: Colors
+                                                                    .grey[300],
+                                                              ),
+                                                              child: Transform
+                                                                  .scale(
+                                                                scale: 1.1,
+                                                                child: Radio<
+                                                                    SortingOption>(
+                                                                  activeColor:
+                                                                      Colors
+                                                                          .black,
+                                                                  value:
+                                                                      SortingOption
+                                                                          .all,
+                                                                  groupValue:
+                                                                      _sortingOption,
+                                                                  onChanged:
+                                                                      (SortingOption?
+                                                                          value) {
+                                                                    setLocalState(
+                                                                        () {
+                                                                      _sortingOption =
+                                                                          value ??
+                                                                              SortingOption.all;
+                                                                    });
+                                                                    setState(
+                                                                        () {
+                                                                      _sortingOption =
+                                                                          value ??
+                                                                              SortingOption.all;
+                                                                    });
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                });
+                                              },
+                                            );
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  _sortingOption ==
+                                                          SortingOption.fit
+                                                      ? 'Phù hợp nhất'
+                                                      : _sortingOption ==
+                                                              SortingOption
+                                                                  .newest
+                                                          ? 'Mới nhất'
+                                                          : 'Tất cả bình luận',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                                const Icon(
+                                                  Icons
+                                                      .keyboard_arrow_down_outlined,
+                                                  size: 20,
+                                                  color: Colors.black,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               )
                             ],
                           )),
