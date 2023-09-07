@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
-import 'dart:ui' as ui;
 
+import 'package:facebook/features/comment/screens/comment_screen.dart';
 import 'package:facebook/features/news-feed/widgets/post_content.dart';
 import 'package:facebook/models/post.dart';
 import 'package:flutter/material.dart';
@@ -750,98 +749,107 @@ class _PostCardState extends State<PostCard> {
                               ],
                             ),
                           ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 10,
-            bottom: 8,
-            left: 10,
-            right: 10,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, CommentScreen.routeName,
+                  arguments: widget.post);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 10,
+                bottom: 8,
+                left: 10,
+                right: 10,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: 42,
-                    child: Stack(
-                      children: [
-                        const SizedBox(
-                          width: 24,
-                          height: 24,
-                        ),
-                        Positioned(
-                          top: 2,
-                          left: 18,
-                          child: Image.asset(
-                            icons[1],
-                            width: 20,
-                          ),
-                        ),
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 2,
-                                )),
-                            child: Image.asset(
-                              icons[0],
-                              width: 20,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 42,
+                        child: Stack(
+                          children: [
+                            const SizedBox(
+                              width: 24,
+                              height: 24,
                             ),
-                          ),
+                            Positioned(
+                              top: 2,
+                              left: 18,
+                              child: Image.asset(
+                                icons[1],
+                                width: 20,
+                              ),
+                            ),
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    )),
+                                child: Image.asset(
+                                  icons[0],
+                                  width: 20,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Text(
+                        reactions,
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    reactions,
-                    style: const TextStyle(
-                      color: Colors.black54,
-                      fontSize: 14,
-                    ),
+                  Row(
+                    children: [
+                      widget.post.comment != null
+                          ? Text(
+                              '${widget.post.comment} bình luận',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black54,
+                              ),
+                            )
+                          : const SizedBox(),
+                      (widget.post.comment != null && widget.post.share != null)
+                          ? const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              child: Icon(
+                                Icons.circle,
+                                size: 3,
+                                color: Colors.black54,
+                              ),
+                            )
+                          : const SizedBox(),
+                      widget.post.share != null
+                          ? Text(
+                              '${widget.post.share} lượt chia sẻ',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black54,
+                              ),
+                            )
+                          : const SizedBox(),
+                    ],
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  widget.post.comment != null
-                      ? Text(
-                          '${widget.post.comment} bình luận',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black54,
-                          ),
-                        )
-                      : const SizedBox(),
-                  (widget.post.comment != null && widget.post.share != null)
-                      ? const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: Icon(
-                            Icons.circle,
-                            size: 3,
-                            color: Colors.black54,
-                          ),
-                        )
-                      : const SizedBox(),
-                  widget.post.share != null
-                      ? Text(
-                          '${widget.post.share} lượt chia sẻ',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black54,
-                          ),
-                        )
-                      : const SizedBox(),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
         const Padding(
