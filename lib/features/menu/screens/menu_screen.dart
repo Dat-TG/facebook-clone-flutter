@@ -3,6 +3,8 @@ import 'package:facebook/features/menu/widgets/shortcut.dart';
 import 'package:facebook/models/user.dart';
 import 'package:flutter/material.dart';
 
+import '../../memory/screens/memory_screen.dart';
+
 class MenuScreen extends StatefulWidget {
   static double offset = 0;
   static bool viewMoreShortcuts = false;
@@ -1203,7 +1205,6 @@ class _MenuScreenState extends State<MenuScreen> {
                           Container(
                             width: double.infinity,
                             margin: const EdgeInsets.all(5),
-                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.rectangle,
@@ -1220,9 +1221,22 @@ class _MenuScreenState extends State<MenuScreen> {
                                     spreadRadius: 0,
                                   ),
                                 ]),
-                            child: const Shortcut(
-                                img: 'assets/images/menu/memory.png',
-                                title: 'Kỷ niệm'),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(10),
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, MemoryScreen.routeName);
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Shortcut(
+                                      img: 'assets/images/menu/memory.png',
+                                      title: 'Kỷ niệm'),
+                                ),
+                              ),
+                            ),
                           ),
                           Container(
                             width: double.infinity,
