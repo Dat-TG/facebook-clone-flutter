@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:facebook/features/comment/screens/comment_screen.dart';
 import 'package:facebook/features/news-feed/screen/image_fullscreen.dart';
+import 'package:facebook/features/news-feed/screen/multiple_images_post_screen.dart';
 import 'package:facebook/features/news-feed/widgets/post_content.dart';
 import 'package:facebook/models/post.dart';
 import 'package:flutter/material.dart';
@@ -125,9 +126,18 @@ class _PostCardState extends State<PostCard> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage(widget.post.user.avatar),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.black12,
+                        width: 0.5,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage(widget.post.user.avatar),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
@@ -238,22 +248,33 @@ class _PostCardState extends State<PostCard> {
                     children: [
                       Column(
                         children: [
-                          Image.asset(
-                            widget.post.image![0],
-                            width: (widget.post.image!.length > 2 &&
-                                    widget.post.image!.length < 5)
-                                ? MediaQuery.of(context).size.width *
-                                    2 /
-                                    3 *
-                                    0.99
-                                : MediaQuery.of(context).size.width / 2 * 0.99,
-                            height: widget.post.image!.length >= 5
-                                ? leftImageHeight / 2 -
-                                    MediaQuery.of(context).size.width /
-                                        2 *
-                                        0.005
-                                : leftImageHeight,
-                            fit: BoxFit.cover,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                MultipleImagesPostScreen.routeName,
+                                arguments: widget.post,
+                              );
+                            },
+                            child: Image.asset(
+                              widget.post.image![0],
+                              width: (widget.post.image!.length > 2 &&
+                                      widget.post.image!.length < 5)
+                                  ? MediaQuery.of(context).size.width *
+                                      2 /
+                                      3 *
+                                      0.99
+                                  : MediaQuery.of(context).size.width /
+                                      2 *
+                                      0.99,
+                              height: widget.post.image!.length >= 5
+                                  ? leftImageHeight / 2 -
+                                      MediaQuery.of(context).size.width /
+                                          2 *
+                                          0.005
+                                  : leftImageHeight,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           if (widget.post.image!.length >= 5)
                             Padding(
@@ -261,16 +282,25 @@ class _PostCardState extends State<PostCard> {
                                   top: MediaQuery.of(context).size.width /
                                       2 *
                                       0.01),
-                              child: Image.asset(
-                                widget.post.image![1],
-                                width: MediaQuery.of(context).size.width /
-                                    2 *
-                                    0.99,
-                                height: leftImageHeight / 2 -
-                                    MediaQuery.of(context).size.width /
-                                        2 *
-                                        0.005,
-                                fit: BoxFit.cover,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    MultipleImagesPostScreen.routeName,
+                                    arguments: widget.post,
+                                  );
+                                },
+                                child: Image.asset(
+                                  widget.post.image![1],
+                                  width: MediaQuery.of(context).size.width /
+                                      2 *
+                                      0.99,
+                                  height: leftImageHeight / 2 -
+                                      MediaQuery.of(context).size.width /
+                                          2 *
+                                          0.005,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                         ],
@@ -313,71 +343,83 @@ class _PostCardState extends State<PostCard> {
                                                   0.01
                                           : 0,
                                     ),
-                                    child: Stack(
-                                      children: [
-                                        Image.asset(
-                                          widget.post.image![i],
-                                          width: widget.post.image!.length >
-                                                      2 &&
-                                                  widget.post.image!.length < 5
-                                              ? MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  3
-                                              : MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2 *
-                                                  0.99,
-                                          height: i <
-                                                  widget.post.image!.length - 1
-                                              ? widget.post.image!.length < 5
-                                                  ? leftImageHeight /
-                                                          (widget.post.image!
-                                                                  .length -
-                                                              1) -
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          2 /
-                                                          3 *
-                                                          0.01
-                                                  : leftImageHeight / 3 -
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width /
-                                                          2 *
-                                                          0.01
-                                              : widget.post.image!.length < 5
-                                                  ? leftImageHeight /
-                                                      (widget.post.image!
-                                                              .length -
-                                                          1)
-                                                  : leftImageHeight / 3,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        if (i == 4 &&
-                                            widget.post.image!.length > 5)
-                                          Positioned.fill(
-                                            child: Center(
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                width: double.infinity,
-                                                height: double.infinity,
-                                                color: Colors.black
-                                                    .withOpacity(0.3),
-                                                child: Text(
-                                                  '+${widget.post.image!.length - i - 1}',
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          MultipleImagesPostScreen.routeName,
+                                          arguments: widget.post,
+                                        );
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          Image.asset(
+                                            widget.post.image![i],
+                                            width: widget.post.image!.length >
+                                                        2 &&
+                                                    widget.post.image!.length <
+                                                        5
+                                                ? MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    3
+                                                : MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2 *
+                                                    0.99,
+                                            height: i <
+                                                    widget.post.image!.length -
+                                                        1
+                                                ? widget.post.image!.length < 5
+                                                    ? leftImageHeight /
+                                                            (widget.post.image!
+                                                                    .length -
+                                                                1) -
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            2 /
+                                                            3 *
+                                                            0.01
+                                                    : leftImageHeight / 3 -
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            2 *
+                                                            0.01
+                                                : widget.post.image!.length < 5
+                                                    ? leftImageHeight /
+                                                        (widget.post.image!
+                                                                .length -
+                                                            1)
+                                                    : leftImageHeight / 3,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          if (i == 4 &&
+                                              widget.post.image!.length > 5)
+                                            Positioned.fill(
+                                              child: Center(
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  color: Colors.black
+                                                      .withOpacity(0.3),
+                                                  child: Text(
+                                                    '+${widget.post.image!.length - i - 1}',
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 18,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                               ],
@@ -432,43 +474,55 @@ class _PostCardState extends State<PostCard> {
                                           ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
-                                  child: Stack(
-                                    children: [
-                                      Image.asset(
-                                        widget.post.image![i],
-                                        width: (MediaQuery.of(context)
-                                                    .size
-                                                    .width -
-                                                (min(widget.post.image!.length,
-                                                            4) -
-                                                        1) *
-                                                    3) /
-                                            (min(widget.post.image!.length, 4)),
-                                        fit: BoxFit.cover,
-                                        height: min(leftImageHeight, 300),
-                                      ),
-                                      if (i == 3 &&
-                                          widget.post.image!.length > 4)
-                                        Positioned.fill(
-                                          child: Center(
-                                            child: Container(
-                                              alignment: Alignment.center,
-                                              width: double.infinity,
-                                              height: double.infinity,
-                                              color:
-                                                  Colors.black.withOpacity(0.3),
-                                              child: Text(
-                                                '+${widget.post.image!.length - i - 1}',
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 18,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        MultipleImagesPostScreen.routeName,
+                                        arguments: widget.post,
+                                      );
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Image.asset(
+                                          widget.post.image![i],
+                                          width: (MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  (min(
+                                                              widget.post.image!
+                                                                  .length,
+                                                              4) -
+                                                          1) *
+                                                      3) /
+                                              (min(widget.post.image!.length,
+                                                  4)),
+                                          fit: BoxFit.cover,
+                                          height: min(leftImageHeight, 300),
+                                        ),
+                                        if (i == 3 &&
+                                            widget.post.image!.length > 4)
+                                          Positioned.fill(
+                                            child: Center(
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                color: Colors.black
+                                                    .withOpacity(0.3),
+                                                child: Text(
+                                                  '+${widget.post.image!.length - i - 1}',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 18,
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -480,11 +534,20 @@ class _PostCardState extends State<PostCard> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: Image.asset(
-                                  widget.post.image![0],
-                                  width: double.infinity,
-                                  height: min(200, leftImageHeight),
-                                  fit: BoxFit.cover,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      MultipleImagesPostScreen.routeName,
+                                      arguments: widget.post,
+                                    );
+                                  },
+                                  child: Image.asset(
+                                    widget.post.image![0],
+                                    width: double.infinity,
+                                    height: min(200, leftImageHeight),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -532,53 +595,65 @@ class _PostCardState extends State<PostCard> {
                                                     right: 5,
                                                   )
                                                 : EdgeInsets.zero,
-                                        child: Stack(
-                                          children: [
-                                            Image.asset(
-                                              widget.post.image![i],
-                                              width: (MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      20 -
-                                                      (min(
-                                                                  widget
-                                                                      .post
-                                                                      .image!
-                                                                      .length,
-                                                                  5) -
-                                                              2) *
-                                                          5) /
-                                                  (min(
-                                                          widget.post.image!
-                                                              .length,
-                                                          5) -
-                                                      1),
-                                              fit: BoxFit.cover,
-                                              height: min(leftImageHeight, 200),
-                                            ),
-                                            if (i == 4 &&
-                                                widget.post.image!.length > 5)
-                                              Positioned.fill(
-                                                child: Center(
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    width: double.infinity,
-                                                    height: double.infinity,
-                                                    color: Colors.black
-                                                        .withOpacity(0.3),
-                                                    child: Text(
-                                                      '+${widget.post.image!.length - i - 1}',
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 18,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              MultipleImagesPostScreen
+                                                  .routeName,
+                                              arguments: widget.post,
+                                            );
+                                          },
+                                          child: Stack(
+                                            children: [
+                                              Image.asset(
+                                                widget.post.image![i],
+                                                width: (MediaQuery.of(context)
+                                                            .size
+                                                            .width -
+                                                        20 -
+                                                        (min(
+                                                                    widget
+                                                                        .post
+                                                                        .image!
+                                                                        .length,
+                                                                    5) -
+                                                                2) *
+                                                            5) /
+                                                    (min(
+                                                            widget.post.image!
+                                                                .length,
+                                                            5) -
+                                                        1),
+                                                fit: BoxFit.cover,
+                                                height:
+                                                    min(leftImageHeight, 200),
+                                              ),
+                                              if (i == 4 &&
+                                                  widget.post.image!.length > 5)
+                                                Positioned.fill(
+                                                  child: Center(
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      width: double.infinity,
+                                                      height: double.infinity,
+                                                      color: Colors.black
+                                                          .withOpacity(0.3),
+                                                      child: Text(
+                                                        '+${widget.post.image!.length - i - 1}',
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 18,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                   ],
@@ -597,17 +672,27 @@ class _PostCardState extends State<PostCard> {
                                   padding: const EdgeInsets.only(bottom: 10),
                                   child: Column(
                                     children: [
-                                      Image.asset(
-                                        widget.post.image![0],
-                                        width:
-                                            (MediaQuery.of(context).size.width -
-                                                    40) /
-                                                2 *
-                                                0.95,
-                                        height: widget.post.image!.length >= 4
-                                            ? leftImageHeight / 2
-                                            : leftImageHeight,
-                                        fit: BoxFit.cover,
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            MultipleImagesPostScreen.routeName,
+                                            arguments: widget.post,
+                                          );
+                                        },
+                                        child: Image.asset(
+                                          widget.post.image![0],
+                                          width: (MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  40) /
+                                              2 *
+                                              0.95,
+                                          height: widget.post.image!.length >= 4
+                                              ? leftImageHeight / 2
+                                              : leftImageHeight,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                       if (widget.post.image!.length >= 4)
                                         Padding(
@@ -618,16 +703,26 @@ class _PostCardState extends State<PostCard> {
                                                       40) /
                                                   2 *
                                                   0.05),
-                                          child: Image.asset(
-                                            widget.post.image![1],
-                                            width: (MediaQuery.of(context)
-                                                        .size
-                                                        .width -
-                                                    40) /
-                                                2 *
-                                                0.95,
-                                            height: leftImageHeight / 2,
-                                            fit: BoxFit.cover,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.pushNamed(
+                                                context,
+                                                MultipleImagesPostScreen
+                                                    .routeName,
+                                                arguments: widget.post,
+                                              );
+                                            },
+                                            child: Image.asset(
+                                              widget.post.image![1],
+                                              width: (MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                      40) /
+                                                  2 *
+                                                  0.95,
+                                              height: leftImageHeight / 2,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
                                     ],
@@ -676,77 +771,91 @@ class _PostCardState extends State<PostCard> {
                                                           0.05
                                                       : 0,
                                                 ),
-                                                child: Stack(
-                                                  children: [
-                                                    Image.asset(
-                                                      widget.post.image![i],
-                                                      width: (MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width -
-                                                              40) /
-                                                          2 *
-                                                          0.95,
-                                                      height: i <
-                                                              widget.post.image!
-                                                                      .length -
-                                                                  1
-                                                          ? widget.post.image!
-                                                                      .length <
-                                                                  4
-                                                              ? leftImageHeight /
-                                                                  (widget
-                                                                          .post
-                                                                          .image!
-                                                                          .length -
-                                                                      1)
-                                                              : leftImageHeight /
-                                                                  2
-                                                          : widget.post.image!
-                                                                      .length <
-                                                                  4
-                                                              ? leftImageHeight /
-                                                                  (widget
-                                                                          .post
-                                                                          .image!
-                                                                          .length -
-                                                                      1)
-                                                              : leftImageHeight /
-                                                                  2,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                    if (i == 4 &&
-                                                        widget.post.image!
-                                                                .length >
-                                                            5)
-                                                      Positioned.fill(
-                                                        child: Center(
-                                                          child: Container(
-                                                            alignment: Alignment
-                                                                .center,
-                                                            width:
-                                                                double.infinity,
-                                                            height:
-                                                                double.infinity,
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.3),
-                                                            child: Text(
-                                                              '+${widget.post.image!.length - i - 1}',
-                                                              style:
-                                                                  const TextStyle(
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontSize: 18,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      MultipleImagesPostScreen
+                                                          .routeName,
+                                                      arguments: widget.post,
+                                                    );
+                                                  },
+                                                  child: Stack(
+                                                    children: [
+                                                      Image.asset(
+                                                        widget.post.image![i],
+                                                        width: (MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                40) /
+                                                            2 *
+                                                            0.95,
+                                                        height: i <
+                                                                widget
+                                                                        .post
+                                                                        .image!
+                                                                        .length -
+                                                                    1
+                                                            ? widget.post.image!
+                                                                        .length <
+                                                                    4
+                                                                ? leftImageHeight /
+                                                                    (widget
+                                                                            .post
+                                                                            .image!
+                                                                            .length -
+                                                                        1)
+                                                                : leftImageHeight /
+                                                                    2
+                                                            : widget.post.image!
+                                                                        .length <
+                                                                    4
+                                                                ? leftImageHeight /
+                                                                    (widget
+                                                                            .post
+                                                                            .image!
+                                                                            .length -
+                                                                        1)
+                                                                : leftImageHeight /
+                                                                    2,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                      if (i == 4 &&
+                                                          widget.post.image!
+                                                                  .length >
+                                                              5)
+                                                        Positioned.fill(
+                                                          child: Center(
+                                                            child: Container(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              width: double
+                                                                  .infinity,
+                                                              height: double
+                                                                  .infinity,
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.3),
+                                                              child: Text(
+                                                                '+${widget.post.image!.length - i - 1}',
+                                                                style:
+                                                                    const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  fontSize: 18,
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                           ],

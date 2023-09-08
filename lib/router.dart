@@ -2,6 +2,7 @@ import 'package:facebook/features/comment/screens/comment_screen.dart';
 import 'package:facebook/features/home/screens/home_screen.dart';
 import 'package:facebook/features/market_place/screens/product_details_screen.dart';
 import 'package:facebook/features/news-feed/screen/image_fullscreen.dart';
+import 'package:facebook/features/news-feed/screen/multiple_images_post_screen.dart';
 import 'package:facebook/features/news-feed/widgets/story_details.dart';
 import 'package:facebook/models/post.dart';
 import 'package:facebook/models/product.dart';
@@ -71,6 +72,33 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
             ImageFullScreen(
           post: post,
         ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      );
+    case MultipleImagesPostScreen.routeName:
+      final Post post = routeSettings.arguments as Post;
+      return PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            MultipleImagesPostScreen(
+          post: post,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
       );
     default:
       return MaterialPageRoute(
