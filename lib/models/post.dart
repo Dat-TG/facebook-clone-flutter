@@ -19,6 +19,7 @@ class Post {
   final int? share;
   final int? wow;
   final String? layout; // classic, column, quote, frame
+  final String? type; //normal, share, memory, ...
   Post({
     required this.user,
     required this.time,
@@ -38,6 +39,7 @@ class Post {
     this.share,
     this.wow,
     this.layout,
+    this.type,
   });
 
   Post copyWith({
@@ -59,6 +61,7 @@ class Post {
     int? share,
     int? wow,
     String? layout,
+    String? type,
   }) {
     return Post(
       user: user ?? this.user,
@@ -79,6 +82,7 @@ class Post {
       share: share ?? this.share,
       wow: wow ?? this.wow,
       layout: layout ?? this.layout,
+      type: type ?? this.type,
     );
   }
 }

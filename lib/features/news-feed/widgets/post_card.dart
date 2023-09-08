@@ -168,39 +168,42 @@ class _PostCardState extends State<PostCard> {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: 65,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                widget.post.time,
-                                style: const TextStyle(
-                                    color: Colors.black54, fontSize: 14),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(top: 2),
-                                child: Icon(
-                                  Icons.circle,
-                                  size: 2,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                              Icon(
-                                widget.post.shareWith == 'public'
-                                    ? Icons.public
-                                    : widget.post.shareWith == 'friends'
-                                        ? Icons.people
-                                        : widget.post.shareWith ==
-                                                'friends-of-frends'
-                                            ? Icons.groups
-                                            : Icons.lock,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.post.time,
+                              style: const TextStyle(
+                                  color: Colors.black54, fontSize: 14),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 2),
+                              child: Icon(
+                                Icons.circle,
+                                size: 2,
                                 color: Colors.black54,
-                                size: 14,
                               ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Icon(
+                              widget.post.shareWith == 'public'
+                                  ? Icons.public
+                                  : widget.post.shareWith == 'friends'
+                                      ? Icons.people
+                                      : widget.post.shareWith ==
+                                              'friends-of-frends'
+                                          ? Icons.groups
+                                          : Icons.lock,
+                              color: Colors.black54,
+                              size: 14,
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -214,11 +217,12 @@ class _PostCardState extends State<PostCard> {
                     onPressed: () {},
                     icon: const Icon(Icons.more_horiz_rounded),
                   ),
-                  IconButton(
-                    splashRadius: 20,
-                    onPressed: () {},
-                    icon: const Icon(Icons.close),
-                  ),
+                  if (widget.post.type != 'memory')
+                    IconButton(
+                      splashRadius: 20,
+                      onPressed: () {},
+                      icon: const Icon(Icons.close),
+                    ),
                 ],
               )
             ],
@@ -968,102 +972,104 @@ class _PostCardState extends State<PostCard> {
             ),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Divider(
-            color: Colors.black38,
-            height: 0,
+        if (widget.post.type != 'memory')
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Divider(
+              color: Colors.black38,
+              height: 0,
+            ),
           ),
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 11.5,
-                ),
-                alignment: Alignment.center,
-                width: (MediaQuery.of(context).size.width) / 3,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImageIcon(
-                      AssetImage('assets/images/like.png'),
-                      size: 24,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                        'Thích',
-                        style: TextStyle(
-                          fontSize: 15,
+        if (widget.post.type != 'memory')
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 11.5,
+                  ),
+                  alignment: Alignment.center,
+                  width: (MediaQuery.of(context).size.width) / 3,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageIcon(
+                        AssetImage('assets/images/like.png'),
+                        size: 24,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Thích',
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                ),
-                alignment: Alignment.center,
-                width: (MediaQuery.of(context).size.width) / 3,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImageIcon(
-                      AssetImage('assets/images/comment.png'),
-                      size: 22,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                        'Bình luận',
-                        style: TextStyle(
-                          fontSize: 15,
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                  ),
+                  alignment: Alignment.center,
+                  width: (MediaQuery.of(context).size.width) / 3,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageIcon(
+                        AssetImage('assets/images/comment.png'),
+                        size: 22,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Bình luận',
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                ),
-                alignment: Alignment.center,
-                width: (MediaQuery.of(context).size.width) / 3,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImageIcon(
-                      AssetImage('assets/images/share.png'),
-                      size: 27,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                        'Chia sẻ',
-                        style: TextStyle(
-                          fontSize: 15,
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                  ),
+                  alignment: Alignment.center,
+                  width: (MediaQuery.of(context).size.width) / 3,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageIcon(
+                        AssetImage('assets/images/share.png'),
+                        size: 27,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Chia sẻ',
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
+              )
+            ],
+          ),
       ],
     );
   }
