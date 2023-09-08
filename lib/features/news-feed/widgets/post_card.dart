@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:facebook/features/comment/screens/comment_screen.dart';
+import 'package:facebook/features/news-feed/screen/image_fullscreen.dart';
 import 'package:facebook/features/news-feed/widgets/post_content.dart';
 import 'package:facebook/models/post.dart';
 import 'package:flutter/material.dart';
@@ -220,9 +221,15 @@ class _PostCardState extends State<PostCard> {
                         ? widget.post.image!.length
                         : 0) ==
                 1)
-            ? Image.asset((widget.post.image != null)
-                ? widget.post.image![0]
-                : widget.post.video![0])
+            ? GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, ImageFullScreen.routeName,
+                      arguments: widget.post);
+                },
+                child: Image.asset((widget.post.image != null)
+                    ? widget.post.image![0]
+                    : widget.post.video![0]),
+              )
             : (widget.post.layout == 'classic' ||
                     (widget.post.layout == 'frame' &&
                         widget.post.image!.length >= 5))
@@ -947,7 +954,7 @@ class _PostCardState extends State<PostCard> {
               ),
             )
           ],
-        )
+        ),
       ],
     );
   }

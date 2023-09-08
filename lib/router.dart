@@ -1,6 +1,7 @@
 import 'package:facebook/features/comment/screens/comment_screen.dart';
 import 'package:facebook/features/home/screens/home_screen.dart';
 import 'package:facebook/features/market_place/screens/product_details_screen.dart';
+import 'package:facebook/features/news-feed/screen/image_fullscreen.dart';
 import 'package:facebook/features/news-feed/widgets/story_details.dart';
 import 'package:facebook/models/post.dart';
 import 'package:facebook/models/product.dart';
@@ -61,6 +62,15 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
             child: child,
           );
         },
+      );
+    case ImageFullScreen.routeName:
+      final Post post = routeSettings.arguments as Post;
+      return PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            ImageFullScreen(
+          post: post,
+        ),
       );
     default:
       return MaterialPageRoute(

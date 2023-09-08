@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class PostContent extends StatefulWidget {
   final String text;
-  const PostContent({super.key, required this.text});
+  final Color? textColor;
+  const PostContent({super.key, required this.text, this.textColor});
 
   @override
   State<PostContent> createState() => _PostContentState();
@@ -44,8 +45,8 @@ class _PostContentState extends State<PostContent> {
         child: widget.text.length == first.length
             ? Text(
                 first,
-                style: const TextStyle(
-                  color: Colors.black,
+                style: TextStyle(
+                  color: widget.textColor ?? Colors.black,
                   fontSize: 15,
                 ),
               )
@@ -53,9 +54,9 @@ class _PostContentState extends State<PostContent> {
                 ? RichText(
                     text: TextSpan(
                         text: "$first...",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
-                          color: Colors.black,
+                          color: widget.textColor ?? Colors.black,
                         ),
                         children: [
                           WidgetSpan(
@@ -65,10 +66,10 @@ class _PostContentState extends State<PostContent> {
                                 expand = !expand;
                               });
                             },
-                            child: const Text(
+                            child: Text(
                               'Xem thêm',
                               style: TextStyle(
-                                color: Colors.black54,
+                                color: widget.textColor ?? Colors.black54,
                                 fontSize: 15,
                               ),
                             ),
@@ -77,8 +78,8 @@ class _PostContentState extends State<PostContent> {
                   )
                 : Text(
                     widget.text,
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: TextStyle(
+                      color: widget.textColor ?? Colors.black,
                       fontSize: 15,
                     ),
                   ),
