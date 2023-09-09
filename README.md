@@ -1,4 +1,4 @@
-# Flutter Facebook Clone. 
+![Screenshot_1694271106](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/49ad2ecb-eaec-4b84-9490-14d15143b077)# Flutter Facebook Clone. 
 
 Flutter Facebook Clone. 
 This is a simple flutter application where I have clonned Facebook UI.
@@ -37,4 +37,5 @@ If you have any feedback, please reach out to me at dat13102k2@gmail.com
 |![Screenshot_1694104350](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/ea645825-92be-49a5-9afc-3a2f928d445c)|![Screenshot_1694104357](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/fbcb652b-5835-4400-aa11-4175e9310387)|![Screenshot_1694161857](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/bc589166-db2e-4642-9460-6619eab0ee33)|
 | ![Screenshot_1694161863](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/faa864fa-b29c-4ecf-83ab-17b36b5dd67b)| ![Screenshot_1694161868](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/d96207b2-cbe8-4872-b40c-53229474e54b)|![Screenshot_1694161893](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/d7b58718-6edd-4f8f-ade5-3879fb8df39a)|
 | ![Screenshot_1694161905](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/42e96f46-b221-4bf2-bf85-7aff1dbdcf78)| ![Screenshot_1694186408](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/65213586-c7c6-46ce-b060-0274bd75ba81)|![Screenshot_1694186890](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/98ad8212-b076-40aa-b253-38bfcd3d2ede)|
-|![Screenshot_1694186430](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/c978bdc7-e349-4d48-bb74-e94214d51e55)|![Screenshot_1694253586](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/368ff7ce-8569-4a3a-8b5f-ce64e4ef1804)|  	|
+|![Screenshot_1694186430](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/c978bdc7-e349-4d48-bb74-e94214d51e55)|![Screenshot_1694253586](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/368ff7ce-8569-4a3a-8b5f-ce64e4ef1804)|![Screenshot_1694271106](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/4cfa75a8-3ea1-4763-889e-d880836bcc4c)|
+|![Screenshot_1694271119](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/cf06b233-cfd9-40ad-8da3-8f025be68450)|![Screenshot_1694271124](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/b9381e46-4fb6-42ec-9620-fe0a3c7bd2cf)|![Screenshot_1694271130](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/d0fc0eea-f79a-4879-9b4c-e75c452ed612)|
