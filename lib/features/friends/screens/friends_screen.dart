@@ -1,3 +1,4 @@
+import 'package:facebook/features/friends/screens/friends_search_screen.dart';
 import 'package:facebook/features/friends/screens/friends_suggest_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -221,7 +222,12 @@ class _FriendsScreenState extends State<FriendsScreen> {
                     width: 10,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        FriendsSearchScreen.routeName,
+                      );
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.grey[300],
