@@ -1,4 +1,4 @@
-![Screenshot_1694271106](https://github.com/Dat-TG/facebook-clone-flutter/assets/83936894/49ad2ecb-eaec-4b84-9490-14d15143b077)# Flutter Facebook Clone. 
+# Flutter Facebook Clone. 
 
 Flutter Facebook Clone. 
 This is a simple flutter application where I have clonned Facebook UI.
