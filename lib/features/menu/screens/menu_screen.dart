@@ -1,3 +1,4 @@
+import 'package:facebook/features/friends/screens/friends_screen.dart';
 import 'package:facebook/features/menu/widgets/menu_choice.dart';
 import 'package:facebook/features/menu/widgets/shortcut.dart';
 import 'package:facebook/models/user.dart';
@@ -1241,7 +1242,6 @@ class _MenuScreenState extends State<MenuScreen> {
                           Container(
                             width: double.infinity,
                             margin: const EdgeInsets.all(5),
-                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.rectangle,
@@ -1258,9 +1258,22 @@ class _MenuScreenState extends State<MenuScreen> {
                                     spreadRadius: 0,
                                   ),
                                 ]),
-                            child: const Shortcut(
-                                img: 'assets/images/menu/friends.png',
-                                title: 'Bạn bè'),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(10),
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, FriendsScreen.routeName);
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Shortcut(
+                                      img: 'assets/images/menu/friends.png',
+                                      title: 'Bạn bè'),
+                                ),
+                              ),
+                            ),
                           ),
                           Container(
                             width: double.infinity,

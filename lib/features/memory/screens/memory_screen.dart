@@ -304,6 +304,9 @@ class _MemoryScreenState extends State<MemoryScreen> {
                       ),
                     ],
                   ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   Container(
                     color: Colors.black26,
                     width: double.infinity,
