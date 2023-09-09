@@ -1,14 +1,13 @@
-import 'package:facebook/features/friends/screens/friends_suggest_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/user.dart';
 
-class FriendsScreen extends StatefulWidget {
-  static const String routeName = '/friends-screen';
-  const FriendsScreen({super.key});
+class FriendsSuggestScreen extends StatefulWidget {
+  static const String routeName = '/friends-suggest-screen';
+  const FriendsSuggestScreen({super.key});
 
   @override
-  State<FriendsScreen> createState() => _FriendsScreenState();
+  State<FriendsSuggestScreen> createState() => _FriendsSuggestScreenState();
 }
 
 class FriendRequest {
@@ -26,7 +25,7 @@ class FriendRequest {
   });
 }
 
-class _FriendsScreenState extends State<FriendsScreen> {
+class _FriendsSuggestScreenState extends State<FriendsSuggestScreen> {
   final today = DateTime.now();
   final friends = [
     FriendRequest(
@@ -143,30 +142,28 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 color: Colors.black12,
                 height: 0.5,
               )),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            splashRadius: 20,
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+              size: 25,
+            ),
+          ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                splashRadius: 20,
-                icon: const Icon(
-                  Icons.arrow_back,
+              const Text(
+                'Gợi ý',
+                style: TextStyle(
+                  fontSize: 20,
                   color: Colors.black,
-                  size: 25,
+                  fontWeight: FontWeight.normal,
                 ),
-              ),
-              const Expanded(
-                child: Text(
-                  'Bạn bè',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                textAlign: TextAlign.center,
               ),
               IconButton(
                 onPressed: () {},
@@ -186,115 +183,20 @@ class _FriendsScreenState extends State<FriendsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 10,
-                top: 20,
-              ),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        FriendsSuggestScreen.routeName,
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: const Text(
-                        'Gợi ý',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: const Text(
-                        'Bạn bè',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const Divider(
-              color: Colors.black12,
-              thickness: 0.5,
-              height: 40,
-              indent: 10,
-              endIndent: 10,
-            ),
             const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 10,
+              padding: EdgeInsets.only(
+                left: 10,
+                top: 15,
+                bottom: 15,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Lời mời kết bạn',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '568',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    'Xem tất cả',
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.blueAccent,
-                    ),
-                  )
-                ],
+              child: Text(
+                'Những người bạn có thể biết',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
             ),
             for (int i = 0; i < friends.length; i++)
               Padding(
@@ -420,7 +322,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                                     ),
                                   ),
                                   child: const Text(
-                                    'Chấp nhận',
+                                    'Thêm bạn bè',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w500,
@@ -443,7 +345,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                                     ),
                                   ),
                                   child: const Text(
-                                    'Xóa',
+                                    'Gỡ',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
