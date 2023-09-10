@@ -423,9 +423,6 @@ class _WatchScreenState extends State<WatchScreen> {
                     ...posts.asMap().entries.map((e) {
                       return Column(
                         children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
                           WatchVideo(
                             post: e.value,
                             videoKey: key[e.key],
