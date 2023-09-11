@@ -5,6 +5,8 @@ import 'package:facebook/models/post.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import 'controls_overlay.dart';
+
 // ignore: must_be_immutable
 class WatchVideo extends StatefulWidget {
   final Post post;
@@ -280,49 +282,60 @@ class _WatchVideoState extends State<WatchVideo> {
                     children: [
                       AspectRatio(
                         aspectRatio: widget.controller.value!.value.aspectRatio,
-                        child: VideoPlayer(
-                          widget.controller.value!,
-                          key: widget.videoKey,
+                        child: Stack(
+                          children: [
+                            VideoPlayer(
+                              widget.controller.value!,
+                              key: widget.videoKey,
+                            ),
+                            if (widget.isDarkMode == true)
+                              ControlsOverlay(
+                                  controller: widget.controller.value!),
+                          ],
                         ),
                       ),
-                      Positioned(
-                        top: 5,
-                        right: 5,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.picture_in_picture_alt_rounded,
-                            color: Colors.white,
-                            size: 25,
+                      if (widget.isDarkMode == null ||
+                          widget.isDarkMode == false)
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.picture_in_picture_alt_rounded,
+                              color: Colors.white,
+                              size: 25,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        bottom: 5,
-                        right: 5,
-                        child: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              if (widget.controller.value!.value.volume > 0) {
-                                widget.controller.value!.setVolume(0);
-                              } else {
-                                widget.controller.value!.setVolume(1.0);
-                              }
-                            });
-                          },
-                          icon: widget.controller.value!.value.volume > 0
-                              ? const Icon(
-                                  Icons.volume_up_outlined,
-                                  color: Colors.white,
-                                  size: 25,
-                                )
-                              : const Icon(
-                                  Icons.volume_off_outlined,
-                                  color: Colors.white,
-                                  size: 25,
-                                ),
+                      if (widget.isDarkMode == null ||
+                          widget.isDarkMode == false)
+                        Positioned(
+                          bottom: 5,
+                          right: 5,
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (widget.controller.value!.value.volume > 0) {
+                                  widget.controller.value!.setVolume(0);
+                                } else {
+                                  widget.controller.value!.setVolume(1.0);
+                                }
+                              });
+                            },
+                            icon: widget.controller.value!.value.volume > 0
+                                ? const Icon(
+                                    Icons.volume_up_outlined,
+                                    color: Colors.white,
+                                    size: 25,
+                                  )
+                                : const Icon(
+                                    Icons.volume_off_outlined,
+                                    color: Colors.white,
+                                    size: 25,
+                                  ),
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 )
