@@ -7,7 +7,7 @@ This is a simple flutter application where I have clonned Facebook UI.
 
 ``` 
 
-git clone https://github.com/Dat-TG/facebook-clone-ui.git
+git clone https://github.com/Dat-TG/facebook-clone-flutter.git
 flutter pub get
 flutter run 
 
