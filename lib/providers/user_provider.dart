@@ -98,6 +98,10 @@ class UserProvider extends ChangeNotifier {
         name: 'Hà Linhh',
         avatar: 'assets/images/user/halinh.jpg',
       ),
+      User(
+        name: 'Minh Trí',
+        avatar: 'assets/images/user/minhtri.jpg',
+      ),
     ],
     posts: [
       Post(
