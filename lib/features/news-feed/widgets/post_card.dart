@@ -9,6 +9,8 @@ import 'package:facebook/features/news-feed/widgets/post_content.dart';
 import 'package:facebook/models/post.dart';
 import 'package:flutter/material.dart';
 
+import '../../personal-page/screens/personal_page_screen.dart';
+
 class PostCard extends StatefulWidget {
   final Post post;
   const PostCard({super.key, required this.post});
@@ -123,7 +125,7 @@ class _PostCardState extends State<PostCard> {
         ? Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -152,11 +154,20 @@ class _PostCardState extends State<PostCard> {
                                 padding: const EdgeInsets.only(bottom: 2),
                                 child: Row(
                                   children: [
-                                    Text(
-                                      widget.post.user.name,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          PersonalPageScreen.routeName,
+                                          arguments: widget.post.user,
+                                        );
+                                      },
+                                      child: Text(
+                                        widget.post.user.name,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                     (widget.post.user.verified == true
@@ -858,7 +869,10 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               if (widget.post.layout != 'quote')
-                PostContent(text: widget.post.content!),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: PostContent(text: widget.post.content!),
+                ),
               ((widget.post.video != null ? widget.post.video!.length : 0) +
                           (widget.post.image != null
                               ? widget.post.image!.length
@@ -1585,8 +1599,8 @@ class _PostCardState extends State<PostCard> {
                     padding: const EdgeInsets.only(
                       top: 10,
                       bottom: 8,
-                      left: 10,
-                      right: 10,
+                      left: 15,
+                      right: 15,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

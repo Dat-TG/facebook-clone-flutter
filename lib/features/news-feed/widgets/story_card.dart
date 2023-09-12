@@ -6,7 +6,8 @@ import 'package:video_player/video_player.dart';
 
 class StoryCard extends StatefulWidget {
   final Story story;
-  const StoryCard({super.key, required this.story});
+  final bool? hidden;
+  const StoryCard({super.key, required this.story, this.hidden});
 
   @override
   State<StoryCard> createState() => _StoryCardState();
@@ -71,55 +72,62 @@ class _StoryCardState extends State<StoryCard> {
                 Navigator.pushNamed(context, StoryDetails.routeName,
                     arguments: widget.story);
               },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(
-                      left: 5,
-                      top: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: GlobalVariables.secondaryColor,
-                        width: 3,
-                      ),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.transparent,
-                          width: 1.5,
+              child: SizedBox(
+                width: 100,
+                height: 180,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    if (widget.hidden != true)
+                      Container(
+                        margin: const EdgeInsets.only(
+                          left: 5,
+                          top: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: GlobalVariables.secondaryColor,
+                            width: 3,
+                          ),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.transparent,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundImage: AssetImage(
+                              widget.story.user.avatar,
+                            ),
+                          ),
                         ),
                       ),
-                      child: CircleAvatar(
-                        radius: 15,
-                        backgroundImage: AssetImage(
-                          widget.story.user.avatar,
+                    if (widget.hidden != true)
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 5,
+                          bottom: 5,
+                        ),
+                        child: Text(
+                          widget.story.user.name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 5,
-                      bottom: 5,
-                    ),
-                    child: Text(
-                      widget.story.user.name,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

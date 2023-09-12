@@ -21,7 +21,11 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   Color colorNewPost = Colors.transparent;
   final stories = [
     Story(
-      user: User(name: 'Doraemon', avatar: 'assets/images/user/doraemon.jpg'),
+      user: User(
+        name: 'Doraemon',
+        avatar: 'assets/images/user/doraemon.jpg',
+        type: 'page',
+      ),
       image: ['assets/images/story/1.jpg'],
       time: ['12 phút'],
       shareWith: 'public',
@@ -35,8 +39,10 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
     ),
     Story(
       user: User(
-          name: 'Vietnamese Argentina Football Fan Club (VAFFC)',
-          avatar: 'assets/images/user/vaffc.jpg'),
+        name: 'Vietnamese Argentina Football Fan Club (VAFFC)',
+        avatar: 'assets/images/user/vaffc.jpg',
+        type: 'page',
+      ),
       image: ['assets/images/story/3.jpg'],
       time: ['5 giờ'],
       shareWith: 'friends-of-friends',
@@ -65,8 +71,10 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
   final posts = [
     Post(
       user: User(
-          name: 'Đài Phát Thanh.',
-          avatar: 'assets/images/user/daiphatthanh.jpg'),
+        name: 'Đài Phát Thanh.',
+        avatar: 'assets/images/user/daiphatthanh.jpg',
+        type: 'page',
+      ),
       time: '16 giờ',
       shareWith: 'public',
       content:
@@ -84,9 +92,11 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
     ),
     Post(
       user: User(
-          name: 'GOAL Vietnam',
-          verified: true,
-          avatar: 'assets/images/user/goal.png'),
+        name: 'GOAL Vietnam',
+        verified: true,
+        avatar: 'assets/images/user/goal.png',
+        type: 'page',
+      ),
       time: '3 phút',
       shareWith: 'public',
       content:
@@ -589,7 +599,7 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
                       ],
                     ))
                 .toList(),
-          )
+          ),
         ],
       ),
     );

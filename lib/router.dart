@@ -8,9 +8,11 @@ import 'package:facebook/features/memory/screens/memory_screen.dart';
 import 'package:facebook/features/news-feed/screen/image_fullscreen.dart';
 import 'package:facebook/features/news-feed/screen/multiple_images_post_screen.dart';
 import 'package:facebook/features/news-feed/widgets/story_details.dart';
+import 'package:facebook/features/personal-page/screens/personal_page_screen.dart';
 import 'package:facebook/models/post.dart';
 import 'package:facebook/models/product.dart';
 import 'package:facebook/models/story.dart';
+import 'package:facebook/models/user.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -162,6 +164,25 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
             const FriendsSearchScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      );
+    case PersonalPageScreen.routeName:
+      final User user = routeSettings.arguments as User;
+      return PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            PersonalPageScreen(user: user),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(1.0, 0.0);
           const end = Offset.zero;

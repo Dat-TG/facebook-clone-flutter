@@ -5,6 +5,7 @@ import 'package:facebook/models/user.dart';
 import 'package:flutter/material.dart';
 
 import '../../memory/screens/memory_screen.dart';
+import '../../personal-page/screens/personal_page_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   static double offset = 0;
@@ -406,71 +407,80 @@ class _MenuScreenState extends State<MenuScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 8,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.black12,
-                              width: 1,
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    PersonalPageScreen.routeName,
+                    arguments: user,
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.black12,
+                                width: 1,
+                              ),
+                            ),
+                            child: CircleAvatar(
+                              backgroundImage: AssetImage(user.avatar),
+                              radius: 20,
                             ),
                           ),
-                          child: CircleAvatar(
-                            backgroundImage: AssetImage(user.avatar),
-                            radius: 20,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  user.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const Text(
+                                  'Xem trang cá nhân của bạn',
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.white,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                user.name,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Text(
-                                'Xem trang cá nhân của bạn',
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 2,
-                          color: Colors.white,
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage(secondUser.avatar),
+                          radius: 18,
                         ),
                       ),
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage(secondUser.avatar),
-                        radius: 18,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
