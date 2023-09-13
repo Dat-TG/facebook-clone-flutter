@@ -33,6 +33,16 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
           friends: random.nextInt(5000),
         );
       }
+      if (user.likes == null) {
+        user = user.copyWith(
+          likes: random.nextInt(1000000),
+        );
+      }
+      if (user.type == 'page' && user.followers == null) {
+        user = user.copyWith(
+          followers: random.nextInt(1000000),
+        );
+      }
       mutualFriends = random.nextInt(user.friends ?? 1000);
     } else {
       setState(() {
@@ -229,75 +239,145 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    user.name,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        user.name,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      (user.verified == true
+                          ? const Padding(
+                              padding: EdgeInsets.only(left: 5),
+                              child: Icon(
+                                Icons.verified,
+                                color: Colors.blue,
+                                size: 15,
+                              ),
+                            )
+                          : const SizedBox()),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  if (user.type != 'page')
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${user.friends! >= 1000 ? '${user.friends! ~/ 1000},${(user.friends! ~/ 100) % 10}K' : user.friends}',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        const Text(
-                          'bạn bè',
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        if (!isMine)
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.circle,
+                  user.type != 'page'
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${user.friends! >= 1000 ? '${user.friends! ~/ 1000},${(user.friends! ~/ 100) % 10}K' : user.friends}',
+                              style: const TextStyle(
                                 color: Colors.black,
-                                size: 3,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
                               ),
-                              const SizedBox(
-                                width: 10,
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            const Text(
+                              'bạn bè',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
                               ),
-                              Text(
-                                '$mutualFriends',
-                                style: const TextStyle(
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            if (!isMine)
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.circle,
+                                    color: Colors.black,
+                                    size: 3,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    '$mutualFriends',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  const Text(
+                                    'bạn chung',
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${user.likes! >= 1000 ? '${user.likes! ~/ 1000}K' : user.likes}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            const Text(
+                              'lượt thích',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.circle,
                                   color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                                  size: 3,
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              const Text(
-                                'bạn chung',
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 16,
+                                const SizedBox(
+                                  width: 10,
                                 ),
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
+                                Text(
+                                  '${user.followers! >= 1000 ? '${user.followers! ~/ 1000}K' : user.followers}',
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                const Text(
+                                  'người theo dõi',
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                   const SizedBox(
                     height: 5,
                   ),
@@ -409,107 +489,183 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                             )
                           ],
                         )
-                      : Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
+                      : user.type != 'page'
+                          ? Row(
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      backgroundColor: Colors.grey[200],
+                                      padding: EdgeInsets.zero,
+                                    ),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        ImageIcon(
+                                          AssetImage(
+                                              'assets/images/friend.png'),
+                                          size: 16,
+                                          color: Colors.black,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          'Bạn bè',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  backgroundColor: Colors.grey[200],
-                                  padding: EdgeInsets.zero,
                                 ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    ImageIcon(
-                                      AssetImage('assets/images/friend.png'),
-                                      size: 16,
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      backgroundColor: Colors.blue[700],
+                                    ),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ImageIcon(
+                                          AssetImage(
+                                              'assets/images/message.png'),
+                                          color: Colors.white,
+                                          size: 18,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          'Nhắn tin',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      backgroundColor: Colors.grey[200],
+                                      padding: EdgeInsets.zero,
+                                    ),
+                                    child: const Icon(
+                                      Icons.more_horiz_rounded,
+                                      size: 20,
                                       color: Colors.black,
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Bạn bè',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              flex: 3,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                  backgroundColor: Colors.blue[700],
                                 ),
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ImageIcon(
-                                      AssetImage('assets/images/message.png'),
-                                      color: Colors.white,
-                                      size: 18,
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      backgroundColor: Colors.blue[700],
+                                      padding: EdgeInsets.zero,
                                     ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
+                                    child: const Text(
                                       'Nhắn tin',
                                       style: TextStyle(
+                                        fontSize: 16,
                                         color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      backgroundColor: Colors.grey[200],
+                                    ),
+                                    child: const Text(
+                                      'Đã thích',
+                                      style: TextStyle(
+                                        color: Colors.black,
                                         fontSize: 16,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                  backgroundColor: Colors.grey[200],
-                                  padding: EdgeInsets.zero,
                                 ),
-                                child: const Icon(
-                                  Icons.more_horiz_rounded,
-                                  size: 20,
-                                  color: Colors.black,
+                                const SizedBox(
+                                  width: 10,
                                 ),
-                              ),
+                                Expanded(
+                                  flex: 1,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      backgroundColor: Colors.grey[200],
+                                      padding: EdgeInsets.zero,
+                                    ),
+                                    child: const Icon(
+                                      Icons.more_horiz_rounded,
+                                      size: 20,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
                 ],
               ),
             ),
-            if (isMine)
+            if (isMine || user.type == 'page')
               Container(
                 width: double.infinity,
                 height: 10,
@@ -568,6 +724,118 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                   ],
                 ),
               ),
+            if (user.type == 'page')
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 10,
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.blue[50],
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          'Bài viết',
+                          style: TextStyle(
+                            color: Colors.blue[700],
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Text(
+                          'Giới thiệu',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Text(
+                          'Video',
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Row(
+                          children: [
+                            Text(
+                              'Xem thêm',
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Icon(
+                              Icons.arrow_drop_down_sharp,
+                              size: 25,
+                              color: Colors.black54,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             isMine
                 ? Container(
                     width: double.infinity,
@@ -591,7 +859,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (isMine)
+                  if (isMine || user.type == 'page')
                     const Padding(
                       padding: EdgeInsets.only(bottom: 10),
                       child: Text(
@@ -601,6 +869,58 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),
+                      ),
+                    ),
+                  if (user.pageType != null)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 10,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.info_rounded,
+                            size: 25,
+                            color: Colors.black54,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: RichText(
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                                children: [
+                                  const TextSpan(
+                                    text: 'Trang',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: ' · ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: user.pageType,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   if (user.educations != null)
@@ -633,7 +953,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                                   children: [
                                     TextSpan(
                                       text:
-                                          'Học ${user.educations![i].majors} tại ',
+                                          'Học ${user.educations![i].majors != '' ? '${user.educations![i].majors} ' : ''}tại ',
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -651,6 +971,52 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                           ],
                         ),
                       ),
+                  if (user.address != null)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 10,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.house_rounded,
+                            size: 25,
+                            color: Colors.black54,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: RichText(
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                                children: [
+                                  const TextSpan(
+                                    text: 'Sống tại ',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: user.address,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   if (user.hometown != null)
                     Padding(
                       padding: const EdgeInsets.only(
@@ -697,7 +1063,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                         ],
                       ),
                     ),
-                  if (user.followers != null)
+                  if (user.type != 'page' && user.followers != null)
                     Padding(
                       padding: const EdgeInsets.only(
                         bottom: 10,
@@ -819,9 +1185,10 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                           ),
                       ],
                     ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  if (user.stories != null || isMine)
+                    const SizedBox(
+                      height: 10,
+                    ),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -858,9 +1225,10 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                               )
                             ],
                           ),
-                        const SizedBox(
-                          width: 15,
-                        ),
+                        if (isMine)
+                          const SizedBox(
+                            width: 15,
+                          ),
                         if (user.stories != null)
                           for (int i = 0; i < user.stories!.length; i++)
                             Padding(
@@ -898,9 +1266,10 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  if (user.stories != null)
+                    const SizedBox(
+                      height: 10,
+                    ),
                   if (isMine)
                     Row(
                       children: [
@@ -948,9 +1317,11 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Bạn bè',
-                        style: TextStyle(
+                      Text(
+                        user.type != 'page'
+                            ? 'Bạn bè'
+                            : 'Bài viết của ${user.name}',
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           color: Colors.black,
@@ -966,29 +1337,32 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                         ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  RichText(
-                    textAlign: TextAlign.left,
-                    text: TextSpan(
-                        text: user.friends.toString(),
-                        style: const TextStyle(
-                          color: Colors.black54,
-                          fontSize: 16,
-                        ),
-                        children: [
-                          isMine
-                              ? const TextSpan(text: ' người bạn ')
-                              : mutualFriends > 0
-                                  ? TextSpan(
-                                      text: ' ($mutualFriends) bạn chung')
-                                  : const TextSpan()
-                        ]),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  if (user.type != 'page')
+                    const SizedBox(
+                      height: 5,
+                    ),
+                  if (user.type != 'page')
+                    RichText(
+                      textAlign: TextAlign.left,
+                      text: TextSpan(
+                          text: user.friends.toString(),
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                          ),
+                          children: [
+                            isMine
+                                ? const TextSpan(text: ' người bạn ')
+                                : mutualFriends > 0
+                                    ? TextSpan(
+                                        text: ' ($mutualFriends) bạn chung')
+                                    : const TextSpan()
+                          ]),
+                    ),
+                  if (user.type != 'page')
+                    const SizedBox(
+                      height: 20,
+                    ),
                   if (user.topFriends != null)
                     Column(
                       children: [
@@ -1134,88 +1508,93 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 10,
-              width: double.infinity,
-              color: Colors.grey,
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15,
+            if (user.type != 'page')
+              const SizedBox(
+                height: 10,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Bài viết',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                      color: Colors.black,
-                    ),
-                  ),
-                  if (isMine)
-                    Text(
-                      'Bộ lọc',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.blue[700],
-                      ),
-                    ),
-                ],
+            if (user.type != 'page')
+              Container(
+                height: 10,
+                width: double.infinity,
+                color: Colors.grey,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {},
-              child: Padding(
+            if (user.type != 'page')
+              const SizedBox(
+                height: 15,
+              ),
+            if (user.type != 'page')
+              Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 15,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        right: 10,
-                      ),
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage(user.avatar),
-                        radius: 20,
+                    const Text(
+                      'Bài viết',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                        color: Colors.black,
                       ),
                     ),
-                    Expanded(
-                      child: Text(
-                        isMine
-                            ? 'Bạn đang nghĩ gì?'
-                            : 'Viết gì đó cho ${user.name}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
+                    if (isMine)
+                      Text(
+                        'Bộ lọc',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.blue[700],
                         ),
                       ),
-                    ),
-                    IconButton(
-                      splashRadius: 20,
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.image,
-                        color: Colors.green,
-                        size: 20,
-                      ),
-                    ),
                   ],
                 ),
               ),
+            const SizedBox(
+              height: 10,
             ),
+            if (user.type != 'page')
+              InkWell(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          right: 10,
+                        ),
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage(user.avatar),
+                          radius: 20,
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          isMine
+                              ? 'Bạn đang nghĩ gì?'
+                              : 'Viết gì đó cho ${user.name}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        splashRadius: 20,
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.image,
+                          color: Colors.green,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             const SizedBox(
               height: 10,
             ),
@@ -1370,49 +1749,51 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
               height: 10,
               color: Colors.grey,
             ),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(20),
-                onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.image_rounded,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Ảnh',
-                        style: TextStyle(
+            if (user.type != 'page')
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.image_rounded,
                           color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          size: 20,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 5),
+                        Text(
+                          'Ảnh',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              width: double.infinity,
-              height: 10,
-              color: Colors.grey,
-            ),
+            if (user.type != 'page')
+              Container(
+                width: double.infinity,
+                height: 10,
+                color: Colors.grey,
+              ),
             if (user.posts != null)
               for (int i = 0; i < user.posts!.length; i++)
                 Column(

@@ -19,6 +19,8 @@ class User {
   final List<Education>? educations;
   final bool? guard;
   final List<Post>? posts;
+  final String? pageType;
+  final String? address;
   User({
     required this.name,
     required this.avatar,
@@ -37,6 +39,8 @@ class User {
     this.educations,
     this.guard,
     this.posts,
+    this.pageType,
+    this.address,
   });
 
   User copyWith({
@@ -57,6 +61,8 @@ class User {
     List<Education>? educations,
     bool? guard,
     List<Post>? posts,
+    String? pageType,
+    String? address,
   }) {
     return User(
       name: name ?? this.name,
@@ -76,6 +82,8 @@ class User {
       educations: educations ?? this.educations,
       guard: guard ?? this.guard,
       posts: posts ?? this.posts,
+      pageType: pageType ?? this.pageType,
+      address: address ?? this.address,
     );
   }
 }

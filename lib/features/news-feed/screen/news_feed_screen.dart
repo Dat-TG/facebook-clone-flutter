@@ -92,10 +92,99 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
     ),
     Post(
       user: User(
-        name: 'GOAL Vietnam',
         verified: true,
+        name: 'GOAL Vietnam',
         avatar: 'assets/images/user/goal.png',
+        cover: 'assets/images/user/goal-cover.png',
         type: 'page',
+        likes: 285308,
+        followers: 379103,
+        bio:
+            'GOAL là trang tin điện tử về bóng đá lớn nhất thế giới, cập nhật liên tục, đa chiều về mọi giải đấu',
+        pageType: 'Công ty truyền thông/tin tức',
+        socialMedias: [
+          SocialMedia(
+            icon: 'assets/images/email.png',
+            name: 'vietnamdesk@goal.com',
+            link: 'mailto:vietnamdesk@goal.com',
+          ),
+          SocialMedia(
+            icon: 'assets/images/link.png',
+            name: 'goal.com/vn',
+            link: 'goal.com/vn',
+          ),
+        ],
+        posts: [
+          Post(
+            user: User(
+              verified: true,
+              name: 'GOAL Vietnam',
+              avatar: 'assets/images/user/goal.png',
+            ),
+            time: '3 phút',
+            shareWith: 'public',
+            content:
+                '✅ 10 năm cống hiến cho bóng đá trẻ Việt Nam\n✅ Người đầu tiên đưa Việt Nam tham dự World Cup ở cấp độ U20 🌏🇻🇳\n✅ Giành danh hiệu đầu tiên cùng U23 Việt Nam tại giải U23 Đông Nam Á 2023 🏆\n\nMột người thầy đúng nghĩa với sự tận tụy cống hiến cho sự nghiệp ươm mầm những tương lai của bóng đá nước nhà. Cảm ơn ông, HLV Hoàng Anh Tuấn ❤️\n\n📸 VFF\n\n#goalvietnam #hot #HoangAnhTuan #U23Vietnam',
+            image: ['assets/images/post/2.jpg'],
+            like: 163,
+            love: 24,
+            comment: 5,
+            type: 'memory',
+          ),
+          Post(
+            user: User(
+              verified: true,
+              name: 'GOAL Vietnam',
+              avatar: 'assets/images/user/goal.png',
+            ),
+            time: '3 phút',
+            shareWith: 'public',
+            content: 'Do you like Phở?\nBecause I can be your Pho-ever ✨✨',
+            image: [
+              'assets/images/post/3.jpg',
+              'assets/images/post/5.jpg',
+              'assets/images/post/12.jpg',
+              'assets/images/post/13.jpg',
+              'assets/images/post/14.jpg',
+              'assets/images/post/15.jpg',
+              'assets/images/post/16.jpg',
+            ],
+            like: 15000,
+            love: 7300,
+            comment: 258,
+            haha: 235,
+            share: 825,
+            lovelove: 212,
+            wow: 9,
+            layout: 'classic',
+            type: 'memory',
+          ),
+          Post(
+            user: User(
+              verified: true,
+              name: 'GOAL Vietnam',
+              avatar: 'assets/images/user/goal.png',
+            ),
+            time: '3 phút',
+            shareWith: 'public',
+            content:
+                'Những câu thả thính Tiếng Anh mượt mà - The smoothest pick up lines \n\n1. You wanna know who my crush is? - Cậu muốn biết crush của tớ là ai hơm?\nSimple. Just read the first word :> - Đơn giản. Cứ đọc lại từ đầu tiên\n\n2. Hey, i think my phone is broken - Tớ nghĩ điện thoại tớ bị hỏng rùi \nIt doesn’t have your phone number in it. - Vì nó không có sđt của cậu trong nàyyy \nCan you fix it? 😉 - Cậu sửa được không ha?\n\n3. According to my calculations, the more you smile, the more i fall - Theo tính toán của tớ, cậu càng cười, tớ càng đổ \n\n4. I can’t turn water into wine - Tớ không thể biến nước thành rịu\nBut i can turn you into mine - Nhưng tớ có thể biến cậu thành “của tớ” \n\n5. Can i take a picture of you? - Cho tớ chụp 1 bức hình với cậu được hem\nAh, to tell Santa what i want for Christmas this year - À để nói với ông già Noel tớ muốn quà gì dịp giáng sinh năm nay \n\nÁp dụng cho bạn thân, crush, ngừi iu hay cho zui cũng được lun 🥰',
+            image: [
+              'assets/images/post/3.jpg',
+              'assets/images/post/4.jpg',
+              'assets/images/post/5.jpg'
+            ],
+            like: 15000,
+            love: 7300,
+            comment: 258,
+            haha: 235,
+            share: 825,
+            lovelove: 212,
+            wow: 9,
+            layout: 'column',
+            type: 'memory',
+          ),
+        ],
       ),
       time: '3 phút',
       shareWith: 'public',
@@ -108,9 +197,45 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
     ),
     Post(
       user: User(
-          name: 'Khánh Vy',
-          verified: true,
-          avatar: 'assets/images/user/khanhvy.jpg'),
+        name: 'Khánh Vy',
+        verified: true,
+        cover: 'assets/images/user/khanhvy-cover.jpg',
+        avatar: 'assets/images/user/khanhvy.jpg',
+        bio: 'Trần Khánh Vy (1999) - MC VTV - Youtuber - Tác giả Sách',
+        socialMedias: [
+          SocialMedia(
+            icon: 'assets/images/instagram.png',
+            name: 'khanhvyccf',
+            link: 'instagram.com/khanhvyccf',
+          ),
+        ],
+        topFriends: [
+          User(
+            name: 'Khánh Vy',
+            avatar: 'assets/images/user/khanhvy.jpg',
+          ),
+          User(
+            name: 'Leo Messi',
+            avatar: 'assets/images/user/messi.jpg',
+          ),
+          User(
+            name: 'Minh Hương',
+            avatar: 'assets/images/user/minhhuong.jpg',
+          ),
+          User(
+            name: 'Bảo Ngân',
+            avatar: 'assets/images/user/baongan.jpg',
+          ),
+          User(
+            name: 'Hà Linhh',
+            avatar: 'assets/images/user/halinh.jpg',
+          ),
+          User(
+            name: 'Minh Trí',
+            avatar: 'assets/images/user/minhtri.jpg',
+          ),
+        ],
+      ),
       time: '3 phút',
       shareWith: 'public',
       content:
@@ -152,8 +277,95 @@ class _NewsFeedScreenState extends State<NewsFeedScreen> {
       layout: 'classic',
     ),
     Post(
-      user:
-          User(name: 'Minh Hương', avatar: 'assets/images/user/minhhuong.jpg'),
+      user: User(
+        name: 'Minh Hương',
+        avatar: 'assets/images/user/minhhuong.jpg',
+        cover: 'assets/images/story/6.jpg',
+        hometown: 'Vietri, Phú Thọ, Vietnam',
+        educations: [
+          Education(
+              majors: 'Thiết Kế Đồ Họa - Graphics Design',
+              school: 'Mỹ Thuật Công Nghiệp'),
+          Education(majors: '', school: 'Đoàn Trường THPT Việt Trì'),
+        ],
+        address: 'Hà nội',
+        stories: [
+          Story(
+            user: User(
+              name: 'Minh Hương',
+              avatar: 'assets/images/user/minhhuong.jpg',
+            ),
+            image: ['assets/images/story/3.jpg'],
+            time: ['5 giờ'],
+            shareWith: 'friends-of-friends',
+            name: '😧',
+          ),
+          Story(
+            user: User(
+              name: 'Minh Hương',
+              avatar: 'assets/images/user/minhhuong.jpg',
+            ),
+            image: [
+              'assets/images/story/4.jpg',
+              'assets/images/story/5.jpg',
+              'assets/images/story/6.jpg',
+              'assets/images/story/7.jpg',
+            ],
+            video: ['assets/videos/2.mp4', 'assets/videos/1.mp4'],
+            time: ['1 phút'],
+            shareWith: 'friends',
+            name: '18+',
+          ),
+          Story(
+            user: User(
+              name: 'Minh Hương',
+              avatar: 'assets/images/user/minhhuong.jpg',
+            ),
+            video: ['assets/videos/3.mp4'],
+            time: ['1 phút'],
+            shareWith: 'friends',
+            name: '🎨',
+          ),
+        ],
+        socialMedias: [
+          SocialMedia(
+            icon: 'assets/images/instagram.png',
+            name: 'minh.huong.le',
+            link: 'instagram.com/minh.huong.le',
+          ),
+          SocialMedia(
+            icon: 'assets/images/tiktok.png',
+            name: 'minh.huong.le',
+            link: 'tiktok.com/minh.huong.le',
+          ),
+        ],
+        topFriends: [
+          User(
+            name: 'Khánh Vy',
+            avatar: 'assets/images/user/khanhvy.jpg',
+          ),
+          User(
+            name: 'Leo Messi',
+            avatar: 'assets/images/user/messi.jpg',
+          ),
+          User(
+            name: 'Minh Hương',
+            avatar: 'assets/images/user/minhhuong.jpg',
+          ),
+          User(
+            name: 'Bảo Ngân',
+            avatar: 'assets/images/user/baongan.jpg',
+          ),
+          User(
+            name: 'Hà Linhh',
+            avatar: 'assets/images/user/halinh.jpg',
+          ),
+          User(
+            name: 'Minh Trí',
+            avatar: 'assets/images/user/minhtri.jpg',
+          ),
+        ],
+      ),
       time: '3 phút',
       shareWith: 'public',
       content: 'My chiuuu 😚',
